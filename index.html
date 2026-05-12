@@ -542,6 +542,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   /* ── State ── */
   var ARIA_IDLE = "idle", ARIA_THINKING = "thinking", ARIA_SPEAKING = "speaking";
   var ariaState = ARIA_IDLE;
+  var ariaHistory = [];
+  var ariaLeadCaptured = false;
+
+  var SHEETS_URL_ARIA = 'https://script.google.com/macros/s/AKfycbweyCgq-8O4rYQHvQ2GJaU_QrbsVTyJGfufNQbyTw4xtv2p6DlX99k6eDe6W5Qh3cRMxA/exec';
 
   function setAriaState(s) {
     ariaState = s;
@@ -559,9 +563,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
 
   /* ── Typewriter ── */
-  var ariaHistory = [];
   async function typeWriter(el, text, speed) {
-    speed = speed || 26;
+    speed = speed || 22;
     setAriaState(ARIA_SPEAKING);
     el.textContent = "";
     for (var i = 0; i < text.length; i++) {
@@ -599,6 +602,41 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     if (v) scrollChat();
   }
 
+  /* ── Lead form inline ── */
+  function showLeadForm() {
+    var msgs = document.getElementById("aria-messages");
+    var wrap = document.createElement("div");
+    wrap.id = "aria-lead-form";
+    wrap.style.cssText = "margin:10px 0 10px 36px;background:rgba(232,80,26,0.08);border:1px solid rgba(232,80,26,0.25);border-radius:12px;padding:16px;display:flex;flex-direction:column;gap:10px;";
+    wrap.innerHTML =
+      '<input id="aria-lead-nombre" type="text" placeholder="Tu nombre" style="background:#0f0f0f;border:1px solid #2a2a2a;border-radius:8px;padding:10px 14px;color:#fff;font-size:14px;outline:none;font-family:inherit;" />' +
+      '<input id="aria-lead-email" type="email" placeholder="Tu email" style="background:#0f0f0f;border:1px solid #2a2a2a;border-radius:8px;padding:10px 14px;color:#fff;font-size:14px;outline:none;font-family:inherit;" />' +
+      '<button id="aria-lead-submit" style="background:#E8501A;color:#fff;border:none;border-radius:8px;padding:10px 16px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;">Recibir análisis →</button>';
+    msgs.appendChild(wrap);
+    scrollChat();
+
+    document.getElementById("aria-lead-submit").addEventListener("click", async function() {
+      var nombre = document.getElementById("aria-lead-nombre").value.trim();
+      var email  = document.getElementById("aria-lead-email").value.trim();
+      if (!nombre || !email) return;
+
+      /* guardar lead */
+      var params = new URLSearchParams({ nombre: nombre, email: email, area: 'ARIA-chat', origen: 'aria-diagnostico' });
+      fetch(SHEETS_URL_ARIA + "?" + params, { method: "GET", mode: "no-cors" });
+      ariaLeadCaptured = true;
+
+      /* remover form, mostrar confirmación */
+      wrap.remove();
+      var confirmBubble = addBubble("user");
+      confirmBubble.textContent = nombre + " · " + email;
+
+      /* mandar a ARIA con los datos */
+      var msg = "Me llamo " + nombre + " y mi email es " + email + ".";
+      await sendToARIA(msg);
+    });
+  }
+
+  /* ── Send to ARIA ── */
   async function sendToARIA(userText) {
     ariaHistory.push({ role: "user", content: userText });
     setAriaState(ARIA_THINKING);
@@ -611,10 +649,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       });
       if (!res.ok) throw new Error("err");
       var data = await res.json();
-      var txt = data.content || "Disculpá, hubo un error. Escribime directo por WhatsApp.";
-      ariaHistory.push({ role: "assistant", content: txt });
+      var raw = data.content || "Disculpá, hubo un error. Escribime directo por WhatsApp.";
+
+      /* detectar marcador de captura de lead */
+      var needsLead = raw.includes("[[CAPTURAR_LEAD]]");
+      var txt = raw.replace("[[CAPTURAR_LEAD]]", "").trim();
+
+      ariaHistory.push({ role: "assistant", content: raw });
       showTyping(false);
       await typeWriter(addBubble("agent"), txt);
+
+      if (needsLead && !ariaLeadCaptured) {
+        showLeadForm();
+      }
     } catch(e) {
       showTyping(false);
       await typeWriter(addBubble("agent"), "Disculpá, tuve un problema técnico. Escribime al WhatsApp y te respondo enseguida.");
@@ -638,7 +685,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     setTimeout(async function() {
       setAriaState(ARIA_SPEAKING);
       await typeWriter(addBubble("agent"),
-        "Hola, soy ARIA. Puedo ayudarte a hacer crecer tu negocio — con automatización, marketing, SEO o marca personal. ¿Qué hace tu negocio y cuál es tu mayor desafío ahora mismo?");
+        "Hola, soy ARIA. Contame qué hace tu negocio y cuál es el mayor problema que tenés ahora mismo.");
     }, 600);
   }
 
