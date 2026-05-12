@@ -1353,10 +1353,14 @@ a { text-decoration: none; color: inherit; }
    RESPONSIVE
    ===================== */
 @media (max-width: 768px) {
-  .nav { padding: 16px 24px; }
-  .nav__links { display: none; }
+  /* Prevent any horizontal overflow */
+  body, html { overflow-x: hidden; }
 
-  .hero { padding: 110px 24px 60px; }
+  .nav { padding: 16px 20px; }
+  .nav__links { display: none; }
+  .nav__logo-img { height: 28px; }
+
+  .hero { padding: 110px 20px 60px; }
   .hero__visual { display: none; }
 
   .stats__grid { grid-template-columns: repeat(2, 1fr); }
@@ -1367,12 +1371,10 @@ a { text-decoration: none; color: inherit; }
   /* Proceso mobile: vertical timeline */
   .proceso__stage {
     height: auto;
-    padding: 0 24px 60px;
+    padding: 0 20px 60px;
   }
-
   .proceso__svg  { display: none; }
   .ghost-num     { display: none; }
-
   .paso {
     position: static;
     width: 100%;
@@ -1385,8 +1387,9 @@ a { text-decoration: none; color: inherit; }
 
   .form__row { grid-template-columns: 1fr; }
 
-  .footer { padding: 28px 24px; }
+  .footer { padding: 28px 20px; }
   .footer__inner { flex-direction: column; gap: 10px; text-align: center; }
+  .footer__links { flex-wrap: wrap; justify-content: center; gap: 12px; }
 
   /* Bento → single column */
   .cards.bento { grid-template-columns: 1fr; }
@@ -1400,13 +1403,33 @@ a { text-decoration: none; color: inherit; }
   /* Hero form card — mobile: stack below content */
   .hero__form-card {
     position: static;
-    width: calc(100% - 48px);
+    width: calc(100% - 40px);
     margin: 32px auto 0;
-    right: auto;
-    top: auto;
+    right: auto; top: auto;
     transform: none;
   }
   .scroll-hint { display: none; }
+
+  /* Section padding reducido en mobile */
+  .servicios, .proceso, .kova-live { padding-left: 20px; padding-right: 20px; }
+  .container { padding-left: 20px; padding-right: 20px; }
+
+  /* Section titles no se cortan */
+  .section__title { font-size: clamp(28px, 8vw, 42px) !important; word-break: break-word; }
+  .section__sub   { font-size: 14px !important; }
+
+  /* Marquee no desborda */
+  .marquee-wrap { overflow: hidden; }
+
+  /* Botones apilados en mobile */
+  .btn-group, .hero__ctas { flex-direction: column; align-items: stretch; gap: 12px; }
+  .btn-group .btn, .hero__ctas .btn { text-align: center; }
+
+  /* Cards padding interno reducido */
+  .card { padding: 28px 20px; }
+
+  /* Whatsapp float — no tapa el input */
+  .whatsapp-float { bottom: 16px; right: 16px; }
 }
 
 /* ============================================================
@@ -5188,4 +5211,384 @@ body.nav-open { overflow: hidden; }
   .wc-grid--2 { grid-template-columns: 1fr; }
   .wc-prog__line { width: 32px; }
   .wc-card { padding: 20px 16px; }
+}
+
+/* ============================================================
+   PREMIUM VISUAL EFFECTS — Pure CSS, zero JS, zero weight
+   ============================================================ */
+
+/* ── Shimmer sweep en todos los botones naranjas ── */
+.btn--primary,
+.hs__cta {
+  overflow: hidden;
+}
+.btn--primary::after,
+.hs__cta::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -120%;
+  width: 55%; height: 100%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.22) 50%, transparent 100%);
+  transform: skewX(-18deg);
+  animation: btnShimmer 3.5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes btnShimmer {
+  0%,60% { left: -120%; }
+  85%    { left: 160%; }
+  100%   { left: 160%; }
+}
+
+/* ── Cards — hover dramático con glow anaranjado ── */
+.card:not(.flip-card):hover {
+  border-color: rgba(232,80,26,0.55) !important;
+  box-shadow:
+    0 28px 80px rgba(0,0,0,0.55),
+    0 0 0 1px rgba(232,80,26,0.18),
+    0 0 70px rgba(232,80,26,0.12),
+    inset 0 1px 0 rgba(255,255,255,0.07) !important;
+  transform: translateY(-7px) !important;
+}
+.flip-card:hover {
+  border-color: rgba(232,80,26,0.55) !important;
+  box-shadow:
+    0 28px 80px rgba(0,0,0,0.55),
+    0 0 0 1px rgba(232,80,26,0.18),
+    0 0 70px rgba(232,80,26,0.12) !important;
+}
+
+/* ── Nav links — glow naranja al hover ── */
+.nav__link:hover {
+  text-shadow: 0 0 18px rgba(232,80,26,0.7) !important;
+}
+
+/* ── Línea brillante bajo los accent heading ── */
+.accent-heading {
+  position: relative;
+}
+.accent-heading::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #E8501A, #FF8C00, #E8501A, transparent);
+  border-radius: 2px;
+  animation: accentGlow 2s ease-in-out infinite alternate;
+}
+@keyframes accentGlow {
+  0%   { box-shadow: 0 0 6px rgba(232,80,26,0.5); opacity: 0.7; }
+  100% { box-shadow: 0 0 18px rgba(232,80,26,1), 0 0 40px rgba(232,80,26,0.35); opacity: 1; }
+}
+
+/* ── Chat input — foco con glow ── */
+.aria-input:focus {
+  border-color: rgba(232,80,26,0.65) !important;
+  box-shadow: 0 0 0 3px rgba(232,80,26,0.12), 0 0 24px rgba(232,80,26,0.09) !important;
+}
+
+/* ── WhatsApp float — entry + ring pulse verde ── */
+.whatsapp-float {
+  animation: wapp-in 0.6s 2s var(--ease-back) forwards, waPulse 2.8s 2.6s ease-out infinite;
+}
+@keyframes waPulse {
+  0%   { box-shadow: 0 4px 20px rgba(37,211,102,0.4), 0 0 0 0 rgba(37,211,102,0.35); }
+  70%  { box-shadow: 0 4px 20px rgba(37,211,102,0.4), 0 0 0 16px rgba(37,211,102,0); }
+  100% { box-shadow: 0 4px 20px rgba(37,211,102,0.4), 0 0 0 0 rgba(37,211,102,0); }
+}
+
+/* ── Card numbers (01 02 03) — glow on hover ── */
+.card:hover .card__num {
+  color: #E8501A;
+  text-shadow: 0 0 30px rgba(232,80,26,0.6);
+  transition: color 0.3s, text-shadow 0.3s;
+}
+
+/* ── Hablemos nav button — shimmer igual que CTA ── */
+.btn--outline {
+  overflow: hidden;
+  position: relative;
+}
+.btn--outline::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -120%;
+  width: 55%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(232,80,26,0.18), transparent);
+  transform: skewX(-18deg);
+  animation: btnShimmer 4s ease-in-out infinite;
+  animation-delay: 1.2s;
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════════════
+   CURSOR DOT
+══════════════════════════════════════════════ */
+#cursorDot {
+  position: fixed;
+  top: 0; left: 0;
+  width: 12px; height: 12px;
+  background: #E8501A;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 999999;
+  will-change: transform;
+  transition: width 0.15s, height 0.15s, background 0.15s;
+  box-shadow: 0 0 10px rgba(232,80,26,0.8), 0 0 4px rgba(232,80,26,0.5);
+}
+#cursorDot.dot--link {
+  width: 22px; height: 22px;
+  background: rgba(232,80,26,0.2);
+  border: 1.5px solid #E8501A;
+  box-shadow: 0 0 14px rgba(232,80,26,0.6);
+}
+@media (hover: none) {
+  #cursorDot { display: none; }
+}
+
+/* ══════════════════════════════════════════════
+   CARD FLIP  (half-flip — sin preserve-3d, cross-browser)
+   Técnica: cada cara gira 90° (no 180°), secuencialmente.
+   Frente: 0°→90° (desaparece de canto). Dorso: -90°→0° (aparece de canto).
+══════════════════════════════════════════════ */
+.flip-card {
+  overflow: hidden !important;
+  min-height: 380px;
+  position: relative;
+}
+
+.flip-inner {
+  position: absolute;
+  inset: 0;
+}
+
+.flip-card__front,
+.flip-card__back {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  border-radius: var(--radius);
+  overflow: hidden;
+  will-change: transform, opacity;
+}
+
+/* FRONT: visible, rota a 90° (canto) al hover y se va */
+.flip-card__front {
+  background: linear-gradient(145deg, #1A1A1A 0%, var(--color-card-fondo) 100%);
+  transform: perspective(700px) rotateY(0deg);
+  transition: transform 0.28s ease-in;
+  backface-visibility: hidden;
+}
+.flip-card:hover .flip-card__front {
+  transform: perspective(700px) rotateY(90deg);
+  transition: transform 0.28s ease-in;
+}
+
+/* BACK: empieza en -90° (canto), rota a 0° con delay */
+.flip-card__back {
+  background: linear-gradient(135deg, #1a0806 0%, #261009 55%, #111111 100%);
+  border: 1px solid rgba(232,80,26,0.45);
+  padding: 32px 28px;
+  justify-content: center;
+  gap: 14px;
+  transform: perspective(700px) rotateY(-90deg);
+  transition: transform 0.28s 0.28s ease-out;
+  backface-visibility: hidden;
+}
+.flip-card:hover .flip-card__back {
+  transform: perspective(700px) rotateY(0deg);
+  transition: transform 0.28s 0.28s ease-out;
+}
+
+.flip-card__back::before {
+  content: '';
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 200px; height: 200px;
+  background: radial-gradient(circle, rgba(232,80,26,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Back face content */
+.flip-back__num {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 48px;
+  font-weight: 800;
+  line-height: 1;
+  color: rgba(232,80,26,0.18);
+  display: block;
+}
+.flip-back__title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  line-height: 1.2;
+}
+.flip-back__list {
+  list-style: none;
+  padding: 0; margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.flip-back__list li {
+  font-size: 13.5px;
+  color: rgba(255,255,255,0.75);
+  padding-left: 18px;
+  position: relative;
+  line-height: 1.45;
+}
+.flip-back__list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: #E8501A;
+  font-size: 12px;
+}
+.flip-back__result {
+  font-size: 13px;
+  color: rgba(232,80,26,0.9);
+  font-weight: 500;
+  border-top: 1px solid rgba(232,80,26,0.2);
+  padding-top: 10px;
+  margin: 0;
+  line-height: 1.4;
+}
+.flip-back__cta {
+  display: inline-flex;
+  align-items: center;
+  background: #E8501A;
+  color: #fff;
+  border-radius: 7px;
+  padding: 10px 20px;
+  font-size: 13.5px;
+  font-weight: 600;
+  text-decoration: none;
+  width: fit-content;
+  transition: background 0.2s, transform 0.2s;
+  margin-top: 4px;
+}
+.flip-back__cta:hover {
+  background: #ff6a35;
+  transform: translateY(-2px);
+}
+
+/* Hint text on front */
+.flip-hint {
+  display: block;
+  font-size: 11px;
+  color: rgba(255,255,255,0.25);
+  margin-top: auto;
+  padding-top: 8px;
+  letter-spacing: 0.03em;
+}
+
+/* ══════════════════════════════════════════════
+   FLIP CARD — mobile (sin flip, layout normal)
+══════════════════════════════════════════════ */
+@media (hover: none), (max-width: 768px) {
+  .flip-card {
+    perspective: none;
+    overflow: hidden !important;
+    min-height: 0;
+  }
+  .flip-inner {
+    position: static;
+    height: auto;
+  }
+  .flip-card__front {
+    position: static;
+    height: auto;
+    transform: none !important;
+    transition: none;
+  }
+  .flip-card__back { display: none; }
+  .flip-hint { display: none; }
+}
+
+/* ══════════════════════════════════════════════
+   RESPONSIVE IMPECABLE — parches finales
+══════════════════════════════════════════════ */
+
+/* ── iPad landscape / small laptop (≤1024px) ── */
+@media (max-width: 1024px) {
+  .aria-hero__title { font-size: clamp(32px, 5vw, 54px); }
+  .hs__inner { max-width: 100%; }
+}
+
+/* ── Tablet portrait (≤768px) ── */
+@media (max-width: 768px) {
+  /* Contacto form — stack inputs */
+  #contactoForm > div[style*="grid"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+
+  /* ARIA section */
+  .aria-hero__title { font-size: clamp(28px, 8vw, 44px); }
+  .aria-hero__sub { font-size: 14px; }
+  .aria-hero__header { margin-bottom: 32px; }
+
+  /* Flip card front content — inherit card padding rules */
+  .flip-card .flip-card__front { padding: 0; }
+  .flip-card .card__visual { border-radius: 12px 12px 0 0; }
+
+  /* Hot sale countdown no desborda */
+  .hs__countdown { gap: 3px; }
+  .hs__cd-val { min-width: 52px; font-size: 34px; padding: 7px 4px 5px; }
+  .hs__cd-sep { font-size: 26px; margin-top: 8px; }
+
+  /* Section titles */
+  .section__title { font-size: clamp(26px, 8vw, 40px) !important; }
+
+  /* Trust band */
+  .trust-band { padding: 40px 0; }
+
+  /* Blog preview */
+  .blog-preview__grid { grid-template-columns: 1fr; }
+  .blog-preview__header { flex-direction: column; align-items: flex-start; gap: 12px; }
+}
+
+/* ── Móvil chico (≤480px) ── */
+@media (max-width: 480px) {
+  /* Contacto form */
+  #contactoForm input,
+  #contactoForm textarea { font-size: 16px !important; } /* evita zoom en iOS */
+
+  /* ARIA */
+  .aria-hero { padding: 90px 16px 60px; }
+  .aria-hero__title { font-size: clamp(26px, 9vw, 38px); }
+  .aria-chat { height: 400px !important; }
+
+  /* Hero */
+  .hero { padding: 80px 0 40px; }
+  .hero__title { font-size: clamp(28px, 11vw, 42px); }
+
+  /* Sección padding */
+  .servicios, .proceso, .kova-live, .resultados, .planes, .faq, .roi-calc, .speed-race, .trust-band {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .container { padding-left: 16px; padding-right: 16px; }
+
+  /* Stats 2x2 ok */
+  .stat__num { font-size: clamp(32px, 9vw, 48px); }
+
+  /* Footer mínimo */
+  .footer-v2__links { gap: 10px; }
+  .footer-v2__col-title { font-size: 11px; }
+
+  /* WhatsApp no tapa el input del chat */
+  .whatsapp-float { bottom: 80px; }
+
+  /* Hot sale */
+  #hot-sale { padding: 80px 16px 140px; }
+  .hs__spots { padding: 8px 14px; font-size: 11px; }
+  .hs__cta { font-size: 13px; padding: 14px 28px; width: 100%; justify-content: center; box-sizing: border-box; }
+
+  /* Blog */
+  .blog-preview { padding: 60px 0; }
+  .bpv-card__vis { height: 120px; }
 }

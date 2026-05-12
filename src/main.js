@@ -41,6 +41,7 @@ function initAnimations() {
   setupCursorGlow();
   setupCardTilt();
   setupMagnetic();
+  setupParallax();
   setupCounters();
   setupNav();
   setupForm();
@@ -218,6 +219,7 @@ function setupNav() {
    ===================== */
 function setupCursorGlow() {
   const glow = document.getElementById('cursorGlow');
+  const dot  = document.getElementById('cursorDot');
   let mouseX = window.innerWidth / 2;
   let mouseY = window.innerHeight / 2;
   let glowX = mouseX;
@@ -226,7 +228,19 @@ function setupCursorGlow() {
   window.addEventListener('mousemove', (e) => {
     mouseX = e.clientX;
     mouseY = e.clientY;
+    if (dot) {
+      const s = dot.offsetWidth / 2;
+      dot.style.transform = `translate(${e.clientX - s}px, ${e.clientY - s}px)`;
+    }
   });
+
+  /* Expand dot on interactive elements */
+  if (dot) {
+    document.querySelectorAll('a, button, [role="button"], .flip-card').forEach(el => {
+      el.addEventListener('mouseenter', () => dot.classList.add('dot--link'));
+      el.addEventListener('mouseleave', () => dot.classList.remove('dot--link'));
+    });
+  }
 
   function animateGlow() {
     glowX += (mouseX - glowX) * 0.08;
@@ -242,7 +256,7 @@ function setupCursorGlow() {
    CARD TILT + GLOW
    ===================== */
 function setupCardTilt() {
-  document.querySelectorAll('.tilt-card').forEach(card => {
+  document.querySelectorAll('.tilt-card:not(.flip-card)').forEach(card => {
     card.addEventListener('mousemove', (e) => {
       const rect = card.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -1104,7 +1118,7 @@ setupHamburger();
       '#heroTag': 'Automatización · IA · Marketing · SEO',
       '#heroTitle': 'Tu negocio funciona solo.<br><span class="hero__title--accent">Nosotros lo armamos.</span>',
       '#heroSub': 'Automatizamos procesos, desplegamos agentes de IA y conectamos tus herramientas para que escales sin sumar gente.',
-      '#heroCta': '<a href="#aria-section" class="btn btn--primary magnetic">Hablá con ARIA</a><a href="https://wa.me/542615336300?text=Hola%20KOVA%2C%20quiero%20info%20sobre%20sus%20servicios" class="btn btn--ghost magnetic" target="_blank" rel="noopener">Hablemos</a>',
+      '#heroCta': '<a href="#aria-section" class="btn btn--primary magnetic">Hablá con ARIA</a><a href="https://wa.me/5493468649674" class="btn btn--ghost magnetic" target="_blank" rel="noopener">Hablemos</a>',
       // SERVICIOS section
       '.servicios .section__title': 'Lo que hacemos',
       '.servicios .section__sub': 'Crecimiento real, estrategia concreta. Sin humo.',
@@ -1163,7 +1177,7 @@ setupHamburger();
       '#heroTag': 'Automation · AI · Marketing · SEO',
       '#heroTitle': 'Your business runs itself.<br><span class="hero__title--accent">We build the system.</span>',
       '#heroSub': 'We automate processes, deploy AI agents and connect your tools so you can scale without hiring.',
-      '#heroCta': '<a href="#aria-section" class="btn btn--primary magnetic">Talk to ARIA</a><a href="https://wa.me/542615336300?text=Hola%20KOVA%2C%20quiero%20info%20sobre%20sus%20servicios" class="btn btn--ghost magnetic" target="_blank" rel="noopener">Let\'s talk</a>',
+      '#heroCta': '<a href="#aria-section" class="btn btn--primary magnetic">Talk to ARIA</a><a href="https://wa.me/5493468649674" class="btn btn--ghost magnetic" target="_blank" rel="noopener">Let\'s talk</a>',
       // SERVICIOS section
       '.servicios .section__title': 'What we do',
       '.servicios .section__sub': 'Real growth, concrete strategy. No BS.',
@@ -1399,7 +1413,7 @@ setupHamburger();
     const daysText = totalMin === totalMax ? totalMin + ' días' : totalMin + '–' + totalMax + ' días';
     const waMsg = `Hola KOVA! Usé el configurador y quiero:\n\n📌 Tipo: ${t.name}\n🎨 Estilo: ${styleName}\n✅ Extras: ${featList}\n💰 Presupuesto estimado: $${totalPrice.toLocaleString('es-AR')}\n⏱ Plazo estimado: ${daysText}\n\n¿Pueden contactarme para avanzar?`;
     const waBtn = document.getElementById('wcWaBtn');
-    if (waBtn) waBtn.dataset.url = 'https://wa.me/542615336300?text=' + encodeURIComponent(waMsg);
+    if (waBtn) waBtn.dataset.url = 'https://wa.me/5493468649674?text=' + encodeURIComponent(waMsg);
 
     wcGoStep(4);
   };
@@ -1413,3 +1427,59 @@ setupHamburger();
     wcGoStep(1);
   };
 })();
+
+/* =====================
+   PARALLAX
+   ===================== */
+function setupParallax() {
+  /* Orbs de fondo — se mueven más lento que el scroll (visible en todas las pantallas) */
+  gsap.utils.toArray('.parallax-orb').forEach(orb => {
+    gsap.to(orb, {
+      yPercent: parseFloat(orb.dataset.speed || -30),
+      ease: 'none',
+      scrollTrigger: {
+        trigger: orb.parentElement,
+        start: 'top bottom',
+        end: 'bottom top',
+        scrub: 1.5
+      }
+    });
+  });
+
+  /* ARIA header — flota hacia arriba mientras scrolleás fuera de la sección */
+  const ariaHeader = document.querySelector('.aria-hero__header');
+  if (ariaHeader) {
+    gsap.to(ariaHeader, {
+      y: -80,
+      opacity: 0.4,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: '#aria-section',
+        start: 'center top',
+        end: 'bottom top',
+        scrub: 1
+      }
+    });
+  }
+
+  /* Secciones — título entra con clip desde abajo (solo las que NO tienen reveal-text) */
+  document.querySelectorAll('.section__title:not(.reveal-text)').forEach(el => {
+    gsap.from(el, {
+      clipPath: 'inset(100% 0% 0% 0%)',
+      y: 40,
+      duration: 1,
+      ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+    });
+  });
+
+  /* Proceso — pasos entran con stagger dramático */
+  gsap.from('.paso', {
+    x: -60,
+    opacity: 0,
+    duration: 0.8,
+    stagger: 0.15,
+    ease: 'power3.out',
+    scrollTrigger: { trigger: '.proceso', start: 'top 70%', toggleActions: 'play none none none' }
+  });
+}
