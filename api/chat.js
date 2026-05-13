@@ -64,6 +64,7 @@ REGLAS:
 - En cada respuesta, si no lo hiciste antes, mencioná el HOT SALE o los 8 lugares o que el descuento baja cada día.
 - Siempre terminá invitando a escribir al WhatsApp: https://wa.me/5493468649674
 - Máximo 3-4 oraciones por respuesta. Nada de listas largas. Conversacional.
+- NO uses markdown: sin asteriscos, sin negritas, sin guiones. Texto plano siempre.
 - Si alguien pregunta por Franco o Noelia, hablás bien de ellos — son los founders que llevan los proyectos personalmente.`;
 
   try {

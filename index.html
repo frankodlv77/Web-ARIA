@@ -1011,8 +1011,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   /* ── Typewriter ── */
   var ariaHistory = [];
+  function stripMarkdown(text) {
+    return text.replace(/\*\*(.*?)\*\*/g, '$1').replace(/\*(.*?)\*/g, '$1');
+  }
+
   async function typeWriter(el, text, speed) {
     speed = speed || 26;
+    text = stripMarkdown(text);
     setAriaState(ARIA_SPEAKING);
     el.textContent = "";
     for (var i = 0; i < text.length; i++) {
