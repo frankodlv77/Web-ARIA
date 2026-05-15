@@ -168,28 +168,54 @@
     }
 
     .sv2-services__header {
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
-      margin-bottom: 56px;
-      gap: 24px;
-      padding-bottom: 24px;
-      border-bottom: 1px solid var(--color-borde);
+      margin-bottom: 64px;
+    }
+
+    .sv2-services__kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--fuente-ui);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-acento);
+      margin-bottom: 20px;
+    }
+
+    .sv2-services__kicker::before {
+      content: '';
+      display: block;
+      width: 28px;
+      height: 1px;
+      background: var(--color-acento);
     }
 
     .sv2-services__title {
       font-family: var(--fuente-titulo);
-      font-size: clamp(28px, 4vw, 48px);
+      font-size: clamp(36px, 5.5vw, 72px);
       font-weight: 800;
       text-transform: uppercase;
       color: var(--color-texto);
+      line-height: 0.95;
+      margin-bottom: 20px;
     }
 
-    .sv2-services__count {
-      font-family: var(--fuente-ui);
-      font-size: 12px;
-      color: var(--color-texto-tenue);
-      letter-spacing: 0.1em;
+    .sv2-services__title em {
+      font-style: normal;
+      color: transparent;
+      -webkit-text-stroke: 1px rgba(232,80,26,0.7);
+    }
+
+    .sv2-services__sub {
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--color-texto-secundario);
+      max-width: 520px;
+      line-height: 1.7;
+      padding-bottom: 40px;
+      border-bottom: 1px solid var(--color-borde);
     }
 
     /* Accordion item */
@@ -277,16 +303,7 @@
       margin-top: 4px;
     }
 
-    .sv2-item__price-preview {
-      font-family: var(--fuente-titulo);
-      font-size: 18px;
-      font-weight: 800;
-      color: var(--color-texto-secundario);
-      margin-right: 8px;
-      white-space: nowrap;
-    }
-
-    .sv2-item.open .sv2-item__price-preview { color: var(--color-acento); }
+    .sv2-item__price-preview { display: none; }
 
     .sv2-item__chevron {
       width: 32px;
@@ -325,7 +342,7 @@
 
     .sv2-item__body-inner {
       display: grid;
-      grid-template-columns: 1fr 320px;
+      grid-template-columns: 1fr 300px;
       gap: 48px;
       padding: 0 0 48px 104px;
     }
@@ -378,68 +395,86 @@
       flex-shrink: 0;
     }
 
-    /* Price card */
-    .sv2-price-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--color-borde);
-      border-radius: 16px;
-      padding: 28px;
+    /* Resultado card — reemplaza price card */
+    .sv2-result-card {
+      border-radius: 20px;
+      padding: 32px 28px;
       display: flex;
       flex-direction: column;
       gap: 20px;
       align-self: start;
       position: sticky;
       top: 100px;
+      background: linear-gradient(135deg, rgba(232,80,26,0.1) 0%, rgba(232,80,26,0.03) 100%);
+      border: 1px solid rgba(232,80,26,0.28);
+      overflow: hidden;
     }
 
-    .sv2-price-card__label {
+    .sv2-result-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--color-acento), transparent);
+    }
+
+    .sv2-result-card__kicker {
       font-family: var(--fuente-ui);
       font-size: 10px;
       font-weight: 700;
-      letter-spacing: 0.16em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--color-texto-tenue);
+      color: var(--color-acento);
     }
 
-    .sv2-price-card__price {
-      display: flex;
-      align-items: baseline;
-      gap: 6px;
-    }
-
-    .sv2-price-card__currency {
+    .sv2-result-card__metric {
       font-family: var(--fuente-titulo);
-      font-size: 22px;
+      font-size: clamp(32px, 4vw, 48px);
       font-weight: 800;
-      color: var(--color-texto-tenue);
-    }
-
-    .sv2-price-card__amount {
-      font-family: var(--fuente-titulo);
-      font-size: 52px;
-      font-weight: 800;
+      text-transform: uppercase;
       color: var(--color-texto);
       line-height: 1;
     }
 
-    .sv2-price-card__period {
-      font-family: var(--fuente-ui);
-      font-size: 12px;
-      color: var(--color-texto-tenue);
+    .sv2-result-card__metric em {
+      display: block;
+      font-style: normal;
+      color: var(--color-acento);
     }
 
-    .sv2-price-card__note {
+    .sv2-result-card__desc {
       font-size: 13px;
       font-weight: 300;
-      color: var(--color-texto-tenue);
-      line-height: 1.6;
-      padding-top: 16px;
-      border-top: 1px solid var(--color-borde);
+      color: var(--color-texto-secundario);
+      line-height: 1.65;
+      padding-top: 14px;
+      border-top: 1px solid rgba(232,80,26,0.18);
     }
 
-    .sv2-price-card__cta {
-      display: block;
-      text-align: center;
+    .sv2-result-card__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .sv2-result-card__tag {
+      font-family: var(--fuente-ui);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-texto-secundario);
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--color-borde);
+      border-radius: 100px;
+      padding: 5px 12px;
+    }
+
+    .sv2-result-card__cta {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
       padding: 14px 20px;
       background: var(--color-acento);
       color: #fff;
@@ -449,13 +484,36 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       text-decoration: none;
-      border-radius: 10px;
+      border-radius: 12px;
       transition: background 0.2s, transform 0.15s;
+      margin-top: 4px;
     }
 
-    .sv2-price-card__cta:hover {
+    .sv2-result-card__cta:hover {
       background: #c0360d;
-      transform: translateY(-1px);
+      transform: translateY(-2px);
+    }
+
+    /* Mejora visual del accordion cuando está abierto */
+    .sv2-item {
+      border-bottom: 1px solid var(--color-borde);
+      overflow: hidden;
+      transition: background 0.3s;
+    }
+
+    .sv2-item.open {
+      background: rgba(232,80,26,0.025);
+    }
+
+    .sv2-item__trigger { position: relative; }
+
+    .sv2-item.open .sv2-item__trigger::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--color-acento);
+      border-radius: 2px;
     }
 
     /* ── PROCESO ────────────────────────────────────────── */
@@ -785,7 +843,7 @@
     /* ── RESPONSIVE ─────────────────────────────────────── */
     @media (max-width: 1024px) {
       .sv2-item__body-inner { grid-template-columns: 1fr; padding-left: 80px; }
-      .sv2-price-card { position: static; }
+      .sv2-result-card { position: static; }
       .sv2-steps { grid-template-columns: 1fr 1fr; gap: 40px; }
       .sv2-steps::before { display: none; }
       .sv2-steps-v2 { grid-template-columns: 1fr; gap: 14px; }
@@ -798,7 +856,6 @@
       .sv2-item__trigger { gap: 16px; padding: 24px 0; }
       .sv2-item__body-inner { padding-left: 0; gap: 32px; }
       .sv2-item__num { display: none; }
-      .sv2-item__price-preview { display: none; }
       .sv2-cta__headline { font-size: clamp(38px, 10vw, 56px); }
       .sv2-step-v2 { padding: 28px 22px; }
       .sv2-step-v2__ghost { font-size: 80px; bottom: -16px; }
@@ -899,8 +956,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <section class="sv2-services" id="sv2-services">
     <div class="container">
       <div class="sv2-services__header">
-        <h2 class="sv2-services__title">Nuestros servicios</h2>
-        <span class="sv2-services__count">4 servicios disponibles</span>
+        <div class="sv2-services__kicker">Nuestros servicios</div>
+        <h2 class="sv2-services__title">Lo que hacemos<br><em>y cómo lo hacemos</em></h2>
+        <p class="sv2-services__sub">Cuatro áreas. Una sola obsesión: que tu negocio crezca sin que vos tengas que hacer todo. Hacé click en cada servicio para ver qué incluye.</p>
       </div>
 
       <!-- 01 — RRSS -->
@@ -913,7 +971,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="sv2-item__name">Gestión de RRSS</div>
             <div class="sv2-item__teaser">Contenido, comunidad y algoritmo — todo en uno.</div>
           </div>
-          <span class="sv2-item__price-preview">$497/mes</span>
           <div class="sv2-item__chevron">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -937,15 +994,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   <li>Optimización continua según rendimiento</li>
                 </ul>
               </div>
-              <div class="sv2-price-card">
-                <div class="sv2-price-card__label">Inversión mensual</div>
-                <div class="sv2-price-card__price">
-                  <span class="sv2-price-card__currency">$</span>
-                  <span class="sv2-price-card__amount">497</span>
-                  <span class="sv2-price-card__period">/mes</span>
+              <div class="sv2-result-card">
+                <div class="sv2-result-card__kicker">Lo que lográs</div>
+                <div class="sv2-result-card__metric">
+                  Más<br><em>alcance</em><br>real
                 </div>
-                <p class="sv2-price-card__note">Compromiso mínimo de 3 meses. Cancelable después con 30 días de aviso.</p>
-                <a href="index.html#contacto" class="sv2-price-card__cta">Quiero esto →</a>
+                <p class="sv2-result-card__desc">Crecimiento orgánico constante, comunidad activa y leads que llegan solos — sin depender de pauta.</p>
+                <div class="sv2-result-card__tags">
+                  <span class="sv2-result-card__tag">Instagram</span>
+                  <span class="sv2-result-card__tag">TikTok</span>
+                  <span class="sv2-result-card__tag">LinkedIn</span>
+                  <span class="sv2-result-card__tag">Meta Ads</span>
+                </div>
+                <a href="index.html#contacto" class="sv2-result-card__cta">Quiero esto →</a>
               </div>
             </div>
           </div>
@@ -962,7 +1023,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="sv2-item__name">SEO &amp; Visibilidad Web</div>
             <div class="sv2-item__teaser">Aparecer primero en Google cuando te buscan.</div>
           </div>
-          <span class="sv2-item__price-preview">$697/mes</span>
           <div class="sv2-item__chevron">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -986,15 +1046,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   <li>Reporte mensual de posiciones y tráfico orgánico</li>
                 </ul>
               </div>
-              <div class="sv2-price-card">
-                <div class="sv2-price-card__label">Inversión mensual</div>
-                <div class="sv2-price-card__price">
-                  <span class="sv2-price-card__currency">$</span>
-                  <span class="sv2-price-card__amount">697</span>
-                  <span class="sv2-price-card__period">/mes</span>
+              <div class="sv2-result-card">
+                <div class="sv2-result-card__kicker">Lo que lográs</div>
+                <div class="sv2-result-card__metric">
+                  Página 1<br><em>de Google</em>
                 </div>
-                <p class="sv2-price-card__note">Los resultados de SEO se consolidan en 60–90 días. Compromiso mínimo de 3 meses.</p>
-                <a href="index.html#contacto" class="sv2-price-card__cta">Quiero esto →</a>
+                <p class="sv2-result-card__desc">Tráfico orgánico constante sin pagar por cada clic. Resultados que se consolidan y se quedan.</p>
+                <div class="sv2-result-card__tags">
+                  <span class="sv2-result-card__tag">On-page SEO</span>
+                  <span class="sv2-result-card__tag">Keywords</span>
+                  <span class="sv2-result-card__tag">Link Building</span>
+                </div>
+                <a href="index.html#contacto" class="sv2-result-card__cta">Quiero esto →</a>
               </div>
             </div>
           </div>
@@ -1011,7 +1074,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="sv2-item__name">Marca Personal</div>
             <div class="sv2-item__teaser">De profesional a referente reconocido en tu nicho.</div>
           </div>
-          <span class="sv2-item__price-preview">$597/mes</span>
           <div class="sv2-item__chevron">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1035,15 +1097,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   <li>Seguimiento mensual de métricas de autoridad</li>
                 </ul>
               </div>
-              <div class="sv2-price-card">
-                <div class="sv2-price-card__label">Inversión mensual</div>
-                <div class="sv2-price-card__price">
-                  <span class="sv2-price-card__currency">$</span>
-                  <span class="sv2-price-card__amount">597</span>
-                  <span class="sv2-price-card__period">/mes</span>
+              <div class="sv2-result-card">
+                <div class="sv2-result-card__kicker">Lo que lográs</div>
+                <div class="sv2-result-card__metric">
+                  Te eligen<br><em>primero</em>
                 </div>
-                <p class="sv2-price-card__note">Servicio personalizado. Primero hacemos una sesión de diagnóstico gratuita de 30 minutos.</p>
-                <a href="index.html#contacto" class="sv2-price-card__cta">Quiero esto →</a>
+                <p class="sv2-result-card__desc">Autoridad digital genuina. Que tu nombre genere confianza antes de que abran tu boca.</p>
+                <div class="sv2-result-card__tags">
+                  <span class="sv2-result-card__tag">LinkedIn</span>
+                  <span class="sv2-result-card__tag">Branding</span>
+                  <span class="sv2-result-card__tag">Thought Leadership</span>
+                </div>
+                <a href="index.html#contacto" class="sv2-result-card__cta">Quiero esto →</a>
               </div>
             </div>
           </div>
@@ -1057,10 +1122,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           <div class="sv2-item__icon">⚡</div>
           <div class="sv2-item__meta">
             <span class="sv2-item__tag">Automatización &amp; IA</span>
-            <div class="sv2-item__name">Automatización</div>
+            <div class="sv2-item__name">Automatización &amp; IA</div>
             <div class="sv2-item__teaser">Sistemas que trabajan mientras vos dormís.</div>
           </div>
-          <span class="sv2-item__price-preview">Desde $800</span>
           <div class="sv2-item__chevron">
             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
               <path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -1084,14 +1148,19 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
                   <li>Soporte técnico y mantenimiento por 3 meses</li>
                 </ul>
               </div>
-              <div class="sv2-price-card">
-                <div class="sv2-price-card__label">Inversión por proyecto</div>
-                <div class="sv2-price-card__price">
-                  <span class="sv2-price-card__currency">Desde $</span>
-                  <span class="sv2-price-card__amount" style="font-size:38px;">800</span>
+              <div class="sv2-result-card">
+                <div class="sv2-result-card__kicker">Lo que lográs</div>
+                <div class="sv2-result-card__metric">
+                  Operación<br><em>24/7</em>
                 </div>
-                <p class="sv2-price-card__note">Precio según alcance del proyecto. Pedinos un diagnóstico gratuito y te damos un presupuesto en 24hs.</p>
-                <a href="index.html#contacto" class="sv2-price-card__cta">Pedir diagnóstico →</a>
+                <p class="sv2-result-card__desc">Tu negocio califica leads, responde clientes y genera reportes solo — sin que vos muevas un dedo.</p>
+                <div class="sv2-result-card__tags">
+                  <span class="sv2-result-card__tag">n8n</span>
+                  <span class="sv2-result-card__tag">Make</span>
+                  <span class="sv2-result-card__tag">WhatsApp IA</span>
+                  <span class="sv2-result-card__tag">CRM</span>
+                </div>
+                <a href="index.html#contacto" class="sv2-result-card__cta">Pedir diagnóstico →</a>
               </div>
             </div>
           </div>
