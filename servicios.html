@@ -222,23 +222,60 @@
     .sv2-item {
       border-bottom: 1px solid var(--color-borde);
       overflow: hidden;
+      position: relative;
+      transition: background 0.3s;
     }
 
+    .sv2-item.open {
+      background: rgba(232,80,26,0.025);
+    }
+
+    /* Barra naranja izquierda al abrir */
     .sv2-item__trigger {
       width: 100%;
       background: none;
       border: none;
-      padding: 32px 0;
+      padding: 28px 0;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 24px;
       text-align: left;
-      transition: background 0.2s;
+      position: relative;
+      transition: padding-left 0.3s cubic-bezier(0.16,1,0.3,1);
     }
 
-    .sv2-item__trigger:hover { background: rgba(255,255,255,0.015); }
-    .sv2-item.open .sv2-item__trigger { background: rgba(255,255,255,0.02); }
+    /* Sweep naranja de fondo al hover */
+    .sv2-item__trigger::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, rgba(232,80,26,0.06) 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+    }
+
+    .sv2-item__trigger:hover::before,
+    .sv2-item.open .sv2-item__trigger::before {
+      opacity: 1;
+    }
+
+    /* Línea naranja izquierda */
+    .sv2-item__trigger::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 0;
+      background: var(--color-acento);
+      border-radius: 0 2px 2px 0;
+      transition: width 0.3s cubic-bezier(0.16,1,0.3,1);
+    }
+
+    .sv2-item__trigger:hover::after,
+    .sv2-item.open .sv2-item__trigger::after {
+      width: 3px;
+    }
 
     .sv2-item__num {
       font-family: var(--fuente-titulo);
@@ -247,32 +284,39 @@
       color: var(--color-texto-tenue);
       letter-spacing: 0.05em;
       min-width: 32px;
+      transition: color 0.25s;
     }
 
+    .sv2-item:hover .sv2-item__num,
     .sv2-item.open .sv2-item__num { color: var(--color-acento); }
 
     .sv2-item__icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
       border: 1px solid var(--color-borde);
       background: rgba(255,255,255,0.03);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 22px;
+      font-size: 24px;
       flex-shrink: 0;
-      transition: border-color 0.25s, background 0.25s;
+      transition: border-color 0.25s, background 0.25s, transform 0.3s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    .sv2-item:hover .sv2-item__icon {
+      transform: scale(1.08);
+      border-color: rgba(232,80,26,0.3);
+      background: rgba(232,80,26,0.06);
     }
 
     .sv2-item.open .sv2-item__icon {
-      border-color: rgba(232,80,26,0.4);
-      background: rgba(232,80,26,0.08);
+      border-color: rgba(232,80,26,0.5);
+      background: rgba(232,80,26,0.1);
+      transform: scale(1.05);
     }
 
-    .sv2-item__meta {
-      flex: 1;
-    }
+    .sv2-item__meta { flex: 1; }
 
     .sv2-item__tag {
       font-family: var(--fuente-ui);
@@ -283,8 +327,10 @@
       color: var(--color-texto-tenue);
       display: block;
       margin-bottom: 6px;
+      transition: color 0.25s;
     }
 
+    .sv2-item:hover .sv2-item__tag,
     .sv2-item.open .sv2-item__tag { color: var(--color-acento); }
 
     .sv2-item__name {
@@ -294,7 +340,10 @@
       text-transform: uppercase;
       color: var(--color-texto);
       line-height: 1.05;
+      transition: color 0.25s;
     }
+
+    .sv2-item:hover .sv2-item__name { color: #fff; }
 
     .sv2-item__teaser {
       font-size: 14px;
@@ -305,25 +354,61 @@
 
     .sv2-item__price-preview { display: none; }
 
+    /* Hint "Expandir" visible antes de abrir */
+    .sv2-item__expand-hint {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--fuente-ui);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-texto-tenue);
+      white-space: nowrap;
+      transition: color 0.25s, opacity 0.25s;
+      margin-right: 4px;
+    }
+
+    .sv2-item.open .sv2-item__expand-hint { opacity: 0; width: 0; overflow: hidden; margin: 0; }
+
+    .sv2-item:hover .sv2-item__expand-hint { color: var(--color-acento); }
+
+    /* Chevron — naranja siempre visible */
     .sv2-item__chevron {
-      width: 32px;
-      height: 32px;
-      border: 1px solid var(--color-borde);
+      width: 40px;
+      height: 40px;
+      border: 1.5px solid rgba(232,80,26,0.4);
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
-      transition: transform 0.35s, border-color 0.25s, background 0.25s;
+      background: rgba(232,80,26,0.08);
+      color: var(--color-acento);
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), background 0.25s, border-color 0.25s;
+    }
+
+    .sv2-item:hover .sv2-item__chevron {
+      background: rgba(232,80,26,0.16);
+      border-color: rgba(232,80,26,0.7);
     }
 
     .sv2-item.open .sv2-item__chevron {
       transform: rotate(180deg);
-      border-color: rgba(232,80,26,0.4);
-      background: rgba(232,80,26,0.08);
+      background: var(--color-acento);
+      border-color: var(--color-acento);
+      color: #fff;
     }
 
-    .sv2-item__chevron svg { transition: none; }
+    @keyframes chevron-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(232,80,26,0.3); }
+      50%       { box-shadow: 0 0 0 6px rgba(232,80,26,0); }
+    }
+
+    .sv2-item:not(.open) .sv2-item__chevron {
+      animation: chevron-pulse 2.5s ease-in-out infinite;
+    }
 
     /* Accordion body — CSS grid trick */
     .sv2-item__body-wrap {
@@ -623,138 +708,155 @@
       line-height: 1.65;
     }
 
-    /* ── FINAL CTA ──────────────────────────────────────── */
+    /* ── FINAL CTA — versión bold centrada ─────────────────── */
     .sv2-cta {
-      padding: clamp(80px, 14vh, 140px) 0;
+      padding: clamp(100px, 16vh, 160px) 0;
       position: relative;
       overflow: hidden;
       border-top: 1px solid var(--color-borde);
-      text-align: left;
+      text-align: center;
     }
 
-    .sv2-cta__glow {
+    /* Glow central */
+    .sv2-cta::before {
+      content: '';
       position: absolute;
       inset: 0;
-      background:
-        radial-gradient(ellipse 55% 100% at 15% 50%, rgba(232,80,26,0.1) 0%, transparent 65%),
-        radial-gradient(ellipse 40% 70% at 85% 60%, rgba(232,80,26,0.04) 0%, transparent 60%);
+      background: radial-gradient(ellipse 70% 80% at 50% 50%, rgba(232,80,26,0.09) 0%, transparent 65%);
       pointer-events: none;
     }
 
-    .sv2-cta__split {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
+    /* Líneas decorativas */
+    .sv2-cta__lines {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .sv2-cta__lines::before,
+    .sv2-cta__lines::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 200px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(232,80,26,0.25));
+    }
+
+    .sv2-cta__lines::before { left: 0; }
+    .sv2-cta__lines::after  { right: 0; transform: scaleX(-1); }
+
+    .sv2-cta__inner {
       position: relative;
       z-index: 1;
+      max-width: 720px;
+      margin: 0 auto;
     }
 
     .sv2-cta__badge {
       display: inline-flex;
       align-items: center;
+      gap: 8px;
       font-family: var(--fuente-ui);
       font-size: 11px;
       font-weight: 700;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: var(--color-acento);
-      border: 1px solid rgba(232,80,26,0.28);
+      border: 1px solid rgba(232,80,26,0.3);
       border-radius: 100px;
-      padding: 7px 18px;
-      margin-bottom: 28px;
+      padding: 7px 20px;
+      margin-bottom: 32px;
+    }
+
+    .sv2-cta__badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--color-acento);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:0.5; transform:scale(0.6); }
     }
 
     .sv2-cta__headline {
       font-family: var(--fuente-titulo);
-      font-size: clamp(44px, 6vw, 80px);
+      font-size: clamp(52px, 8vw, 112px);
       font-weight: 800;
       text-transform: uppercase;
-      line-height: 0.95;
+      line-height: 0.9;
       color: var(--color-texto);
-      margin-bottom: 24px;
+      margin-bottom: 28px;
+      letter-spacing: -0.02em;
     }
 
     .sv2-cta__headline em {
       font-style: normal;
+      display: block;
       color: transparent;
-      -webkit-text-stroke: 1px rgba(232,80,26,0.8);
+      -webkit-text-stroke: 1px rgba(232,80,26,0.85);
     }
 
     .sv2-cta__sub {
-      font-size: 16px;
+      font-size: 17px;
       font-weight: 300;
       color: var(--color-texto-secundario);
       line-height: 1.7;
+      max-width: 480px;
+      margin: 0 auto 48px;
     }
 
-    .sv2-cta__right {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .sv2-cta__action {
-      display: flex;
+    /* Botón WhatsApp grande */
+    .sv2-cta__wa {
+      display: inline-flex;
       align-items: center;
-      gap: 20px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--color-borde);
-      border-radius: 20px;
-      padding: 24px 28px;
+      gap: 14px;
+      background: var(--color-acento);
+      color: #fff;
       text-decoration: none;
-      color: var(--color-texto);
-      transition: background 0.25s, border-color 0.25s, transform 0.25s;
-    }
-
-    .sv2-cta__action:hover {
-      background: rgba(232,80,26,0.06);
-      border-color: rgba(232,80,26,0.4);
-      transform: translateX(6px);
-    }
-
-    .sv2-cta__action--primary {
-      border-color: rgba(232,80,26,0.35);
-      background: rgba(232,80,26,0.07);
-    }
-
-    .sv2-cta__action-icon {
-      font-size: 24px;
-      width: 52px;
-      height: 52px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(232,80,26,0.12);
-      border-radius: 14px;
-      flex-shrink: 0;
-    }
-
-    .sv2-cta__action-title {
-      font-family: var(--fuente-titulo);
-      font-size: 20px;
-      font-weight: 800;
+      font-family: var(--fuente-ui);
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      color: var(--color-texto);
-      line-height: 1;
-      margin-bottom: 4px;
+      padding: 20px 40px;
+      border-radius: 100px;
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1), background 0.2s, box-shadow 0.25s;
+      box-shadow: 0 8px 32px -8px rgba(232,80,26,0.45);
     }
 
-    .sv2-cta__action-sub {
-      font-size: 12px;
-      font-weight: 300;
-      color: var(--color-texto-tenue);
+    .sv2-cta__wa:hover {
+      transform: translateY(-3px) scale(1.03);
+      background: #d44d18;
+      box-shadow: 0 16px 40px -8px rgba(232,80,26,0.55);
     }
 
-    .sv2-cta__action-arrow {
-      margin-left: auto;
-      font-size: 20px;
-      color: var(--color-acento);
-      transition: transform 0.2s;
+    .sv2-cta__wa:active {
+      transform: translateY(0) scale(0.98);
+      transition-duration: 0.1s;
+    }
+
+    .sv2-cta__wa-icon {
+      width: 28px;
+      height: 28px;
       flex-shrink: 0;
     }
 
-    .sv2-cta__action:hover .sv2-cta__action-arrow { transform: translateX(5px); }
+    .sv2-cta__note {
+      margin-top: 20px;
+      font-size: 13px;
+      color: var(--color-texto-tenue);
+      font-weight: 300;
+    }
+
+    @media (max-width: 768px) {
+      .sv2-cta__headline { font-size: clamp(48px, 14vw, 72px); }
+      .sv2-cta__wa { padding: 18px 32px; font-size: 14px; }
+    }
 
     /* ══════════════════════════════════════════════════════
        PROCESO v2 — 2×2 grid con ghost numbers
@@ -853,9 +955,10 @@
     }
 
     @media (max-width: 768px) {
-      .sv2-item__trigger { gap: 16px; padding: 24px 0; }
+      .sv2-item__trigger { gap: 14px; padding: 22px 0; }
       .sv2-item__body-inner { padding-left: 0; gap: 32px; }
       .sv2-item__num { display: none; }
+      .sv2-item__expand-hint { display: none; }
       .sv2-cta__headline { font-size: clamp(38px, 10vw, 56px); }
       .sv2-step-v2 { padding: 28px 22px; }
       .sv2-step-v2__ghost { font-size: 80px; bottom: -16px; }
@@ -971,9 +1074,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="sv2-item__name">Gestión de RRSS</div>
             <div class="sv2-item__teaser">Contenido, comunidad y algoritmo — todo en uno.</div>
           </div>
+          <span class="sv2-item__expand-hint">Ver más</span>
           <div class="sv2-item__chevron">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
         </button>
@@ -1023,9 +1127,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="sv2-item__name">SEO &amp; Visibilidad Web</div>
             <div class="sv2-item__teaser">Aparecer primero en Google cuando te buscan.</div>
           </div>
+          <span class="sv2-item__expand-hint">Ver más</span>
           <div class="sv2-item__chevron">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
         </button>
@@ -1074,9 +1179,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="sv2-item__name">Marca Personal</div>
             <div class="sv2-item__teaser">De profesional a referente reconocido en tu nicho.</div>
           </div>
+          <span class="sv2-item__expand-hint">Ver más</span>
           <div class="sv2-item__chevron">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
         </button>
@@ -1125,9 +1231,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
             <div class="sv2-item__name">Automatización &amp; IA</div>
             <div class="sv2-item__teaser">Sistemas que trabajan mientras vos dormís.</div>
           </div>
+          <span class="sv2-item__expand-hint">Ver más</span>
           <div class="sv2-item__chevron">
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M4 6l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </div>
         </button>
@@ -1439,43 +1546,25 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </section>
 
-  <!-- ── CTA FINAL v2 ─────────────────────────────────── -->
+  <!-- ── CTA FINAL ────────────────────────────────────── -->
   <section class="sv2-cta">
-    <div class="sv2-cta__glow" aria-hidden="true"></div>
+    <div class="sv2-cta__lines" aria-hidden="true"></div>
     <div class="container">
-      <div class="sv2-cta__split" id="sv2Cta">
-
-        <div class="sv2-cta__left">
-          <div class="sv2-cta__badge">Sin contratos largos · Resultados en 30 días</div>
-          <h2 class="sv2-cta__headline">
-            ¿Por dónde<br>
-            <em>querés</em><br>
-            empezar?
-          </h2>
-          <p class="sv2-cta__sub">
-            Contanos cuál es tu mayor desafío ahora mismo. En 24 horas te respondemos con un plan concreto — gratis, sin compromiso.
-          </p>
-        </div>
-
-        <div class="sv2-cta__right">
-          <a href="index.html#contacto" class="sv2-cta__action sv2-cta__action--primary">
-            <div class="sv2-cta__action-icon">✉️</div>
-            <div>
-              <div class="sv2-cta__action-title">Hablemos gratis</div>
-              <div class="sv2-cta__action-sub">Te respondemos en menos de 24h</div>
-            </div>
-            <span class="sv2-cta__action-arrow">→</span>
-          </a>
-          <a href="https://wa.me/542615336300?text=Hola%20KOVA%2C%20me%20interesa%20conocer%20sus%20servicios" target="_blank" rel="noopener" class="sv2-cta__action">
-            <div class="sv2-cta__action-icon">📱</div>
-            <div>
-              <div class="sv2-cta__action-title">WhatsApp directo</div>
-              <div class="sv2-cta__action-sub">Respuesta inmediata</div>
-            </div>
-            <span class="sv2-cta__action-arrow">→</span>
-          </a>
-        </div>
-
+      <div class="sv2-cta__inner" id="sv2Cta">
+        <div class="sv2-cta__badge">Sin contratos largos · Respuesta en menos de 24h</div>
+        <h2 class="sv2-cta__headline">
+          ¿Listo para<br><em>arrancar?</em>
+        </h2>
+        <p class="sv2-cta__sub">
+          Contanos tu negocio y te decimos exactamente qué haríamos. Sin rodeos, sin costo.
+        </p>
+        <a href="https://wa.me/542615336300?text=Hola%20KOVA%2C%20quiero%20info%20sobre%20sus%20servicios" target="_blank" rel="noopener" class="sv2-cta__wa">
+          <svg class="sv2-cta__wa-icon" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          </svg>
+          Escribinos por WhatsApp
+        </a>
+        <p class="sv2-cta__note">Gratis · Sin compromiso · Respondemos hoy</p>
       </div>
     </div>
   </section>
@@ -1518,9 +1607,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       if (!isOpen) {
         item.classList.add('open');
         item.querySelector('.sv2-item__trigger').setAttribute('aria-expanded', 'true');
+        // Mobile: scroll so the trigger stays visible at top, content opens below
         setTimeout(() => {
-          item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }, 100);
+          const navH = document.getElementById('nav')?.offsetHeight || 72;
+          const top = item.getBoundingClientRect().top + window.scrollY - navH - 16;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }, 50);
       }
     }
 
@@ -1548,8 +1640,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
       // CTA
       gsap.from('#sv2Cta > *', {
-        scrollTrigger: { trigger: '#sv2Cta', start: 'top 82%' },
-        opacity: 0, y: 36, duration: 0.75, stagger: 0.12, ease: 'power3.out'
+        scrollTrigger: { trigger: '#sv2Cta', start: 'top 85%' },
+        opacity: 0, y: 48, duration: 0.8, stagger: 0.1, ease: 'power3.out'
       });
     };
 
