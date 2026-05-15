@@ -36,8 +36,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;800&family=DM+Sans:wght@300;400;500&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="src/tokens.css" />
-  <link rel="stylesheet" href="src/styles.css?v=4" />
+  <link rel="stylesheet" href="src/tokens.css?v=2" />
+  <link rel="stylesheet" href="src/styles.css?v=5" />
 
   <style>
     /* ══════════════════════════════════════════════════════
@@ -752,6 +752,9 @@
       z-index: 1;
       max-width: 720px;
       margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .sv2-cta__badge {
@@ -849,7 +852,7 @@
     .sv2-cta__note {
       margin-top: 20px;
       font-size: 13px;
-      color: var(--color-texto-tenue);
+      color: rgba(255,255,255,0.4);
       font-weight: 300;
     }
 
@@ -857,20 +860,24 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
-      margin-top: 24px;
+      gap: 12px;
+      margin-top: 20px;
       flex-wrap: wrap;
     }
     .sv2-cta__trust-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
       font-size: 12px;
       font-weight: 600;
-      color: var(--color-texto-tenue);
-      letter-spacing: 0.04em;
-      opacity: 0.75;
+      color: rgba(255,255,255,0.55);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
     }
     .sv2-cta__trust-sep {
-      color: var(--color-borde);
-      font-size: 12px;
+      color: rgba(255,255,255,0.15);
+      font-size: 14px;
+      line-height: 1;
     }
 
     @media (max-width: 768px) {
