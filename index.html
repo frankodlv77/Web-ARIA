@@ -1165,6 +1165,286 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </div>
 
+  <!-- ── IMPACT MANIFESTO ────────────────────────── -->
+  <style>
+    .impact-manifesto {
+      position: relative;
+      padding: clamp(80px, 14vh, 140px) 0 clamp(80px, 12vh, 120px);
+      background: #080808;
+      overflow: hidden;
+      border-top: 1px solid rgba(255,255,255,0.05);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .im-bg { position: absolute; inset: 0; pointer-events: none; }
+    .im-grid {
+      position: absolute; inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+      background-size: 64px 64px;
+      -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 50%, black 0%, transparent 100%);
+      mask-image: radial-gradient(ellipse 90% 70% at 50% 50%, black 0%, transparent 100%);
+    }
+    .im-glow {
+      position: absolute; border-radius: 50%; filter: blur(130px);
+    }
+    .im-glow--1 {
+      width: 700px; height: 700px;
+      background: rgba(232,80,26,0.13);
+      top: -180px; left: -160px;
+      animation: imDrift 9s ease-in-out infinite;
+    }
+    .im-glow--2 {
+      width: 550px; height: 550px;
+      background: rgba(232,80,26,0.08);
+      bottom: -160px; right: -100px;
+      animation: imDrift 12s ease-in-out infinite reverse;
+    }
+    @keyframes imDrift {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50% { transform: translate(50px, 40px) scale(1.08); }
+    }
+    .im-inner {
+      position: relative; z-index: 1; text-align: center;
+    }
+    .im-eyebrow {
+      display: inline-flex; align-items: center; gap: 10px;
+      font-family: var(--fuente-ui); font-size: 10px; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: rgba(255,255,255,0.38); margin-bottom: 52px;
+      opacity: 0; transform: translateY(18px);
+    }
+    .im-dot {
+      width: 7px; height: 7px; border-radius: 50%;
+      background: var(--color-acento); flex-shrink: 0;
+      animation: imPulse 2.2s ease-in-out infinite;
+    }
+    @keyframes imPulse {
+      0%,100% { opacity: 1; box-shadow: 0 0 0 0 rgba(232,80,26,0.5); }
+      50% { opacity: 0.5; box-shadow: 0 0 0 8px rgba(232,80,26,0); }
+    }
+    .im-headline {
+      font-family: var(--fuente-titulo);
+      font-size: clamp(44px, 8.5vw, 108px);
+      font-weight: 900; line-height: 0.95;
+      letter-spacing: -0.025em; color: #fff;
+      text-transform: uppercase; margin: 0 0 36px;
+    }
+    .im-word {
+      display: inline-block; opacity: 0;
+      transform: translateY(70px); margin-right: 0.22em;
+      will-change: transform, opacity;
+    }
+    .im-word--accent { color: var(--color-acento); }
+    .im-word--muted  { color: rgba(255,255,255,0.3); }
+    .im-word--nl     { display: block; height: 0.1em; margin: 0; }
+    .im-sub {
+      font-family: var(--fuente-titulo);
+      font-size: clamp(26px, 4vw, 54px);
+      font-weight: 800; color: #fff; text-transform: uppercase;
+      margin: 0 0 72px; opacity: 0; min-height: 1.2em; letter-spacing: -0.01em;
+    }
+    .im-sub--cursor::after {
+      content: '|'; color: var(--color-acento);
+      animation: imBlink 0.8s step-end infinite;
+    }
+    @keyframes imBlink { 0%,100% { opacity:1; } 50% { opacity:0; } }
+    .im-stats {
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 64px; gap: 0; max-width: 760px;
+      opacity: 0; transform: translateY(28px);
+    }
+    .im-stat { flex: 1; padding: 0 32px; }
+    .im-stat__value {
+      display: flex; align-items: baseline; justify-content: center; gap: 4px;
+      font-family: var(--fuente-titulo);
+      font-size: clamp(50px, 7.5vw, 82px);
+      font-weight: 900; color: #fff; line-height: 1;
+    }
+    .im-stat__suffix { font-size: 0.45em; color: var(--color-acento); font-weight: 900; }
+    .im-stat__label {
+      font-size: 11px; font-weight: 600; letter-spacing: 0.09em;
+      text-transform: uppercase; color: rgba(255,255,255,0.35);
+      margin: 10px auto 0; line-height: 1.6; max-width: 130px;
+    }
+    .im-stat__div {
+      width: 1px; height: 72px; flex-shrink: 0;
+      background: rgba(255,255,255,0.08); align-self: center;
+    }
+    .im-cta {
+      display: inline-flex; flex-direction: column; align-items: center; gap: 10px;
+      color: rgba(255,255,255,0.3); text-decoration: none;
+      font-family: var(--fuente-ui); font-size: 11px; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      opacity: 0; transition: color 0.3s ease; cursor: pointer;
+    }
+    .im-cta:hover { color: var(--color-acento); }
+    .im-arrow {
+      width: 22px; height: 22px;
+      animation: imBounce 2.4s ease-in-out infinite;
+    }
+    @keyframes imBounce {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(8px); }
+    }
+    @media (max-width: 640px) {
+      .im-stats { flex-direction: column; gap: 36px; }
+      .im-stat__div { display: none; }
+      .im-stat { padding: 0; }
+    }
+  </style>
+
+  <section class="impact-manifesto" id="impact-manifesto">
+    <div class="im-bg">
+      <div class="im-grid"></div>
+      <div class="im-glow im-glow--1"></div>
+      <div class="im-glow im-glow--2"></div>
+    </div>
+    <div class="container im-inner">
+
+      <div class="im-eyebrow">
+        <span class="im-dot"></span>
+        Mientras lees esto
+      </div>
+
+      <h2 class="im-headline">
+        <span class="im-word">Tu</span>
+        <span class="im-word">competencia</span>
+        <span class="im-word im-word--accent">ya</span>
+        <span class="im-word im-word--accent">automatizó</span>
+        <span class="im-word im-word--nl"></span>
+        <span class="im-word im-word--muted">sus</span>
+        <span class="im-word im-word--muted">ventas,</span>
+        <span class="im-word im-word--muted">sus</span>
+        <span class="im-word im-word--muted">respuestas</span>
+        <span class="im-word im-word--muted">y</span>
+        <span class="im-word im-word--muted">su</span>
+        <span class="im-word im-word--muted">crecimiento.</span>
+      </h2>
+
+      <p class="im-sub im-sub--cursor" id="imSub"></p>
+
+      <div class="im-stats" id="imStats">
+        <div class="im-stat">
+          <div class="im-stat__value">
+            <span class="im-counter" data-target="47" data-dur="2000">0</span>
+            <span class="im-stat__suffix">+</span>
+          </div>
+          <p class="im-stat__label">negocios automatizados</p>
+        </div>
+        <div class="im-stat__div"></div>
+        <div class="im-stat">
+          <div class="im-stat__value">
+            <span class="im-counter" data-target="15" data-dur="1600">0</span>
+            <span class="im-stat__suffix">hs</span>
+          </div>
+          <p class="im-stat__label">liberadas por semana en promedio</p>
+        </div>
+        <div class="im-stat__div"></div>
+        <div class="im-stat">
+          <div class="im-stat__value">
+            <span class="im-counter" data-target="3" data-dur="1000">0</span>
+            <span class="im-stat__suffix">×</span>
+          </div>
+          <p class="im-stat__label">más leads calificados</p>
+        </div>
+      </div>
+
+      <a href="#servicios" class="im-cta" id="imCta">
+        <span>Esto es lo que hacemos</span>
+        <svg class="im-arrow" viewBox="0 0 24 24" fill="none">
+          <path d="M12 5v14M5 12l7 7 7-7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+
+    </div>
+  </section>
+
+  <script>
+  (function () {
+    var sec = document.getElementById('impact-manifesto');
+    if (!sec) return;
+    var done = false;
+
+    function easeOutCubic(t) { return 1 - Math.pow(1 - t, 3); }
+
+    function animateCounter(el) {
+      var target = parseInt(el.dataset.target, 10);
+      var dur    = parseInt(el.dataset.dur, 10);
+      var start  = null;
+      function step(ts) {
+        if (!start) start = ts;
+        var p = Math.min((ts - start) / dur, 1);
+        el.textContent = Math.round(easeOutCubic(p) * target);
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }
+
+    function typeLoop(el, texts, idx) {
+      var text = texts[idx % texts.length];
+      el.textContent = '';
+      var i = 0;
+      var typing = setInterval(function () {
+        el.textContent += text[i];
+        i++;
+        if (i >= text.length) {
+          clearInterval(typing);
+          setTimeout(function () {
+            var erasing = setInterval(function () {
+              el.textContent = el.textContent.slice(0, -1);
+              if (!el.textContent) {
+                clearInterval(erasing);
+                setTimeout(function () { typeLoop(el, texts, idx + 1); }, 300);
+              }
+            }, 40);
+          }, 2000);
+        }
+      }, 65);
+    }
+
+    function run() {
+      if (done) return;
+      done = true;
+
+      var eyebrow = sec.querySelector('.im-eyebrow');
+      var words   = sec.querySelectorAll('.im-word:not(.im-word--nl)');
+      var subEl   = document.getElementById('imSub');
+      var stats   = document.getElementById('imStats');
+      var cta     = document.getElementById('imCta');
+
+      // Eyebrow
+      gsap.to(eyebrow, { opacity: 1, y: 0, duration: 0.7, ease: 'power2.out', delay: 0.1 });
+
+      // Words stagger
+      gsap.to(words, {
+        opacity: 1, y: 0, duration: 0.65,
+        ease: 'back.out(1.4)', stagger: 0.055, delay: 0.25
+      });
+
+      // Typewriter sub
+      setTimeout(function () {
+        gsap.to(subEl, { opacity: 1, duration: 0.4 });
+        typeLoop(subEl, ['¿Y vos?', '¿Seguís manual?', 'Cambialo hoy.', 'Nosotros te ayudamos.'], 0);
+      }, 950);
+
+      // Stats
+      gsap.to(stats, { opacity: 1, y: 0, duration: 0.9, ease: 'power2.out', delay: 1.3 });
+      setTimeout(function () {
+        sec.querySelectorAll('.im-counter').forEach(animateCounter);
+      }, 1400);
+
+      // CTA
+      gsap.to(cta, { opacity: 1, duration: 0.8, delay: 2.2 });
+    }
+
+    var obs = new IntersectionObserver(function (entries) {
+      if (entries[0].isIntersecting) { run(); obs.disconnect(); }
+    }, { threshold: 0.15 });
+    obs.observe(sec);
+  })();
+  </script>
+
   <!-- QU&#201; HACEMOS -->
   <section class="servicios" id="servicios">
     <div class="container">

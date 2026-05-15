@@ -853,6 +853,26 @@
       font-weight: 300;
     }
 
+    .sv2-cta__trust {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+    .sv2-cta__trust-item {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-texto-tenue);
+      letter-spacing: 0.04em;
+      opacity: 0.75;
+    }
+    .sv2-cta__trust-sep {
+      color: var(--color-borde);
+      font-size: 12px;
+    }
+
     @media (max-width: 768px) {
       .sv2-cta__headline { font-size: clamp(48px, 14vw, 72px); }
       .sv2-cta__wa { padding: 18px 32px; font-size: 14px; }
@@ -1366,37 +1386,37 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               <span class="wc-opt__icon">🚀</span>
               <span class="wc-opt__name">Landing Básica</span>
               <span class="wc-opt__desc">1 página simple y efectiva. Presentación + contacto.</span>
-              <span class="wc-opt__price">Desde $800</span>
+              <span class="wc-opt__price">Desde $180</span>
             </button>
             <button class="wc-opt" data-id="landing-avanzada" onclick="wcSelectType(this)">
               <span class="wc-opt__icon">⚡</span>
               <span class="wc-opt__name">Landing Avanzada</span>
               <span class="wc-opt__desc">1 página con secciones premium, animaciones y más.</span>
-              <span class="wc-opt__price">Desde $1.200</span>
+              <span class="wc-opt__price">Desde $240</span>
             </button>
             <button class="wc-opt" data-id="sitio-3" onclick="wcSelectType(this)">
               <span class="wc-opt__icon">📄</span>
               <span class="wc-opt__name">Sitio 3 Páginas</span>
               <span class="wc-opt__desc">Home · Servicios · Contacto. Presencia completa.</span>
-              <span class="wc-opt__price">Desde $1.800</span>
+              <span class="wc-opt__price">Desde $280</span>
             </button>
             <button class="wc-opt" data-id="sitio-5" onclick="wcSelectType(this)">
               <span class="wc-opt__icon">🌐</span>
               <span class="wc-opt__name">Sitio 5 Páginas</span>
               <span class="wc-opt__desc">Presencia web profesional completa con blog.</span>
-              <span class="wc-opt__price">Desde $2.500</span>
+              <span class="wc-opt__price">Desde $360</span>
             </button>
             <button class="wc-opt" data-id="ecommerce" onclick="wcSelectType(this)">
               <span class="wc-opt__icon">🛒</span>
               <span class="wc-opt__name">Tienda Online</span>
               <span class="wc-opt__desc">Catálogo de productos + carrito + pagos online.</span>
-              <span class="wc-opt__price">Desde $3.500</span>
+              <span class="wc-opt__price">Desde $870</span>
             </button>
             <button class="wc-opt" data-id="portfolio" onclick="wcSelectType(this)">
               <span class="wc-opt__icon">🎨</span>
               <span class="wc-opt__name">Portfolio</span>
               <span class="wc-opt__desc">Mostrá tu trabajo con impacto visual máximo.</span>
-              <span class="wc-opt__price">Desde $1.200</span>
+              <span class="wc-opt__price">Desde $350</span>
             </button>
           </div>
           <div class="wc-nav wc-nav--right">
@@ -1564,7 +1584,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
           </svg>
           Escribinos por WhatsApp
         </a>
-        <p class="sv2-cta__note">Gratis · Sin compromiso · Respondemos hoy</p>
+        <div class="sv2-cta__trust">
+          <span class="sv2-cta__trust-item">✓&nbsp;Gratis</span>
+          <span class="sv2-cta__trust-sep">·</span>
+          <span class="sv2-cta__trust-item">✓&nbsp;Sin compromiso</span>
+          <span class="sv2-cta__trust-sep">·</span>
+          <span class="sv2-cta__trust-item">✓&nbsp;Respondemos hoy</span>
+        </div>
       </div>
     </div>
   </section>
