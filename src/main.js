@@ -1295,12 +1295,12 @@ setupHamburger();
 (function() {
   // Data
   const TYPES = {
-    'landing-basica':  { name: 'Landing Básica',    price: 800,  minDays: 5,  maxDays: 7  },
-    'landing-avanzada':{ name: 'Landing Avanzada',  price: 1200, minDays: 7,  maxDays: 10 },
-    'sitio-3':         { name: 'Sitio 3 Páginas',   price: 1800, minDays: 10, maxDays: 14 },
-    'sitio-5':         { name: 'Sitio 5 Páginas',   price: 2500, minDays: 14, maxDays: 21 },
-    'ecommerce':       { name: 'Tienda Online',      price: 3500, minDays: 21, maxDays: 30 },
-    'portfolio':       { name: 'Portfolio',          price: 1200, minDays: 7,  maxDays: 10 },
+    'landing-basica':  { name: 'Landing Básica',    price: 180,  minDays: 5,  maxDays: 7  },
+    'landing-avanzada':{ name: 'Landing Avanzada',  price: 240,  minDays: 7,  maxDays: 10 },
+    'sitio-3':         { name: 'Sitio 3 Páginas',   price: 280,  minDays: 10, maxDays: 14 },
+    'sitio-5':         { name: 'Sitio 5 Páginas',   price: 360,  minDays: 14, maxDays: 21 },
+    'ecommerce':       { name: 'Tienda Online',      price: 870,  minDays: 21, maxDays: 30 },
+    'portfolio':       { name: 'Portfolio',          price: 350,  minDays: 7,  maxDays: 10 },
   };
 
   const STYLES = {
@@ -1367,16 +1367,17 @@ setupHamburger();
     const t = TYPES[wcState.type];
     if (!t) return;
 
-    // Calculate totals
-    let extraPrice = 0, extraDays = 0;
+    // Calculate totals — extras are % points of base, capped at 15%
+    let extraPct = 0, extraDays = 0;
     const featureLabels = [];
     document.querySelectorAll('#wcStep2 .wc-opt.selected').forEach(btn => {
-      extraPrice += parseInt(btn.dataset.price || 0);
-      extraDays  += parseInt(btn.dataset.days  || 0);
+      extraPct  += parseInt(btn.dataset.price || 0);
+      extraDays += parseInt(btn.dataset.days  || 0);
       featureLabels.push({ icon: btn.querySelector('.wc-opt__icon').textContent, name: btn.querySelector('.wc-opt__name').textContent });
     });
 
-    const totalPrice = t.price + extraPrice;
+    const cappedPct  = Math.min(extraPct, 15);
+    const totalPrice = Math.round(t.price * (1 + cappedPct / 100));
     const totalMin   = t.minDays + extraDays;
     const totalMax   = t.maxDays + extraDays;
 
