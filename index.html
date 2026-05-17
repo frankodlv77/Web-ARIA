@@ -49,6 +49,36 @@
 
   <style>
   /* ═══════════════════════════════════════════════════════════
+     PREMIUM ANIMATIONS & SCROLL REVEALS
+  ═══════════════════════════════════════════════════════════ */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scaleReveal {
+    from { opacity: 0; transform: scale(0.92); }
+    to { opacity: 1; transform: scale(1); }
+  }
+  @keyframes heartbeat {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(232, 80, 26, 0.7); }
+    50% { box-shadow: 0 0 0 10px rgba(232, 80, 26, 0); }
+  }
+  @keyframes chevronRotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(180deg); }
+  }
+  .section { opacity: 1; }
+  .section:not(.in-view) { opacity: 0; }
+  .section.in-view { animation: fadeInUp 0.7s ease-out forwards; }
+  .testimonial-card { animation: fadeInUp 0.6s ease-out forwards; animation-fill-mode: both; }
+  .pricing-card { animation: scaleReveal 0.6s ease-out forwards; animation-fill-mode: both; }
+  .faq-item { animation: slideDown 0.5s ease-out forwards; animation-fill-mode: both; }
+
+  /* ═══════════════════════════════════════════════════════════
      ARIA HERO — Full-page entry point
   ═══════════════════════════════════════════════════════════ */
   .aria-hero {
@@ -143,6 +173,244 @@
     gap: 16px;
   }
   .aria-grid__right {}
+
+  /* ═══════════════════════════════════════════════════════════
+     TESTIMONIALS SECTION
+  ═══════════════════════════════════════════════════════════ */
+  .testimonials {
+    min-height: auto;
+    background: linear-gradient(180deg, rgba(232,80,26,0.02) 0%, transparent 100%);
+    padding: 100px 24px;
+    position: relative;
+  }
+  .testimonials .section__header { margin-bottom: 60px; }
+  .testimonials__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .testimonial-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 28px;
+    backdrop-filter: blur(16px);
+    transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .testimonial-card:hover { transform: translateY(-8px); border-color: rgba(232,80,26,0.3); }
+  .testimonial__stars {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+    color: #FFB300;
+    font-size: 16px;
+  }
+  .testimonial__quote {
+    font-family: "DM Sans", sans-serif;
+    font-size: 15px;
+    color: #ccc;
+    line-height: 1.6;
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+  .testimonial__author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .testimonial__avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #E8501A, #FF6B35);
+    flex-shrink: 0;
+  }
+  .testimonial__info h4 { margin: 0; font-size: 14px; color: #fff; font-weight: 600; }
+  .testimonial__info p { margin: 2px 0 0; font-size: 12px; color: #666; }
+
+  /* ═══════════════════════════════════════════════════════════
+     WHY CHOOSE KOVA
+  ═══════════════════════════════════════════════════════════ */
+  .why-kova {
+    background: #050505;
+    padding: 100px 24px;
+    position: relative;
+  }
+  .why-kova .section__header { margin-bottom: 60px; }
+  .why-kova__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .why-item {
+    display: flex;
+    gap: 16px;
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+  .why-item__icon {
+    width: 48px;
+    height: 48px;
+    background: rgba(232,80,26,0.15);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+  .why-item h4 { margin: 0 0 8px; font-size: 16px; color: #fff; }
+  .why-item p { margin: 0; font-size: 14px; color: #777; line-height: 1.5; }
+
+  /* ═══════════════════════════════════════════════════════════
+     PRICING SECTION
+  ═══════════════════════════════════════════════════════════ */
+  .pricing {
+    background: linear-gradient(180deg, transparent 0%, rgba(232,80,26,0.03) 100%);
+    padding: 100px 24px;
+    position: relative;
+  }
+  .pricing .section__header { margin-bottom: 60px; }
+  .pricing__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 32px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .pricing-card {
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 20px;
+    padding: 40px 28px;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+  .pricing-card.popular {
+    background: rgba(232,80,26,0.08);
+    border-color: rgba(232,80,26,0.4);
+    transform: scale(1.05);
+  }
+  .pricing-card:hover { border-color: rgba(232,80,26,0.5); }
+  .pricing-card.popular::before {
+    content: "POPULAR";
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #E8501A, #FF6B35);
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+  }
+  .pricing__name {
+    font-size: 20px;
+    font-weight: 700;
+    color: #fff;
+    margin-bottom: 8px;
+  }
+  .pricing__price {
+    font-size: 36px;
+    font-weight: 800;
+    color: #E8501A;
+    margin-bottom: 4px;
+  }
+  .pricing__price span { font-size: 16px; color: #666; font-weight: 400; }
+  .pricing__desc { font-size: 13px; color: #777; margin-bottom: 24px; }
+  .pricing__features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 24px 0;
+  }
+  .pricing__features li {
+    font-size: 13px;
+    color: #999;
+    margin: 12px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .pricing__features li::before {
+    content: "✓";
+    color: #22C55E;
+    font-weight: bold;
+  }
+  .pricing__cta {
+    background: linear-gradient(135deg, #E8501A 0%, #FF6B35 100%);
+    color: #fff;
+    border: none;
+    padding: 14px 24px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: all 0.3s ease;
+    font-size: 14px;
+  }
+  .pricing__cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(232,80,26,0.3); }
+
+  /* ═══════════════════════════════════════════════════════════
+     FAQ SECTION
+  ═══════════════════════════════════════════════════════════ */
+  .faq {
+    background: #050505;
+    padding: 100px 24px;
+    position: relative;
+  }
+  .faq .section__header { margin-bottom: 60px; }
+  .faq__list {
+    max-width: 800px;
+    margin: 0 auto;
+    list-style: none;
+    padding: 0;
+  }
+  .faq-item {
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 0;
+  }
+  .faq-item:last-child { border-bottom: none; }
+  .faq__header {
+    padding: 24px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: color 0.3s ease;
+  }
+  .faq__header:hover { color: #E8501A; }
+  .faq__title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+  }
+  .faq__chevron {
+    font-size: 20px;
+    color: #E8501A;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+  }
+  .faq-item.open .faq__chevron { transform: rotate(180deg); }
+  .faq__content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    color: #999;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  .faq-item.open .faq__content {
+    max-height: 500px;
+    margin-bottom: 16px;
+  }
 
   /* ═══════════════════════════════════════════════════════════
      ROBOT AVATAR — Lottie
@@ -1453,6 +1721,114 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   })();
   </script>
 
+  <!-- TESTIMONIOS -->
+  <section class="testimonials section" id="testimonials">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">Lo que dicen nuestros clientes</h2>
+        <p class="section__sub">Negocios que crecen con ARIA</p>
+      </div>
+      <div class="testimonials__grid">
+        <div class="testimonial-card" style="--index: 0">
+          <div class="testimonial-card__header">
+            <div class="testimonial-card__avatar">
+              <div style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#E8501A,#FF7A3D)"></div>
+            </div>
+            <div class="testimonial-card__author">
+              <h4>Mar&#237;a Garc&#237;a</h4>
+              <p>Co-founder, TechStart</p>
+            </div>
+          </div>
+          <p class="testimonial-card__quote">"ARIA nos automatiz&#243; la calificaci&#243;n de leads en 2 semanas. Nuestra tasa de conversi&#243;n subi&#243; 40% sin agregar headcount."</p>
+          <div class="testimonial-card__rating">
+            <span>★★★★★</span> Recomendado
+          </div>
+          <div class="testimonial-card__metric">
+            <strong>+40%</strong> conversi&#243;n
+          </div>
+        </div>
+        <div class="testimonial-card" style="--index: 1">
+          <div class="testimonial-card__header">
+            <div class="testimonial-card__avatar">
+              <div style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#FF7A3D,#22C55E)"></div>
+            </div>
+            <div class="testimonial-card__author">
+              <h4>Carlos L&#243;pez</h4>
+              <p>Gerente de Operaciones, E-commerce Premium</p>
+            </div>
+          </div>
+          <p class="testimonial-card__quote">"Liberamos 20 horas por semana en respuestas autom&#225;ticas. Los tiempos de atenci&#243;n bajaron de 24 a 2 horas."</p>
+          <div class="testimonial-card__rating">
+            <span>★★★★★</span> Transformador
+          </div>
+          <div class="testimonial-card__metric">
+            <strong>20 hs/semana</strong> liberadas
+          </div>
+        </div>
+        <div class="testimonial-card" style="--index: 2">
+          <div class="testimonial-card__header">
+            <div class="testimonial-card__avatar">
+              <div style="width:100%;height:100%;border-radius:50%;background:linear-gradient(135deg,#22C55E,#E8501A)"></div>
+            </div>
+            <div class="testimonial-card__author">
+              <h4>Sof&#237;a Rodr&#237;guez</h4>
+              <p>Directora de Marketing, Agencia Digital</p>
+            </div>
+          </div>
+          <p class="testimonial-card__quote">"El soporte post-setup fue clave. ARIA no solo automatiz&#243;, nos entren&#243;. ROI en 3 meses."</p>
+          <div class="testimonial-card__rating">
+            <span>★★★★★</span> Excelente
+          </div>
+          <div class="testimonial-card__metric">
+            <strong>3 meses</strong> para ROI
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- POR QU&#201; KOVA -->
+  <section class="why-kova section" id="why-kova">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">Por qu&#233; KOVA</h2>
+        <p class="section__sub">M&#225;s que software. Partnership que crece con vos.</p>
+      </div>
+      <div class="why-kova__grid">
+        <div class="why-kova__item" style="--index: 0">
+          <div class="why-kova__icon">🧠</div>
+          <h3>IA + Expertos Humanos</h3>
+          <p>No dejamos m&#225;quinas solas. Cada automatizaci&#243;n es dise&#241;ada, ejecutada y optimizada por nuestro equipo especializado.</p>
+        </div>
+        <div class="why-kova__item" style="--index: 1">
+          <div class="why-kova__icon">⚡</div>
+          <h3>Implementaci&#243;n en 48 Horas</h3>
+          <p>Automatizaciones funcionales en menos de 2 d&#237;as. Mientras tus competidores planifican, vos ya est&#225;s corriendo.</p>
+        </div>
+        <div class="why-kova__item" style="--index: 2">
+          <div class="why-kova__icon">✓</div>
+          <h3>Resultados o Dinero de Vuelta</h3>
+          <p>Garant&#237;a: si no ves el impacto prometido en 90 d&#237;as, devolvemos cada peso. Sin excepciones.</p>
+        </div>
+        <div class="why-kova__item" style="--index: 3">
+          <div class="why-kova__icon">🔐</div>
+          <h3>Sin Contratos de Largo Plazo</h3>
+          <p>Mes a mes. Cancel&#225; cuando quieras. Pero spoiler: con resultados, nadie se va.</p>
+        </div>
+        <div class="why-kova__item" style="--index: 4">
+          <div class="why-kova__icon">🎯</div>
+          <h3>Soporte Dedicado 24/7</h3>
+          <p>Problemas en producci&#243;n? Nuestro equipo responde en menos de 2 horas. No "esperar al horario de oficina".</p>
+        </div>
+        <div class="why-kova__item" style="--index: 5">
+          <div class="why-kova__icon">📊</div>
+          <h3>Optimizaci&#243;n Continua</h3>
+          <p>Mensualmente. Analizamos datos, encontramos oportunidades, escalamos lo que funciona.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- QU&#201; HACEMOS -->
   <section class="servicios" id="servicios">
     <div class="container">
@@ -1604,6 +1980,63 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     </div>
   </section>
 
+  <!-- PRECIOS -->
+  <section class="pricing section" id="pricing">
+    <div class="container">
+      <div class="section__header">
+        <h2 class="section__title">Planes y Precios</h2>
+        <p class="section__sub">Elig&#237; el que se adapte a tu negocio</p>
+      </div>
+      <div class="pricing__grid">
+        <div class="pricing-card" style="--index: 0">
+          <h3 class="pricing__name">Startup</h3>
+          <div class="pricing__price">$<strong>500</strong><span>/mes</span></div>
+          <p class="pricing__desc">Perfecto para comenzar</p>
+          <ul class="pricing__features">
+            <li>Hasta 2 automatizaciones</li>
+            <li>Soporte por email</li>
+            <li>Implementaci&#243;n en 72 horas</li>
+            <li>Reportes b&#225;sicos</li>
+            <li>Actualizaciones mensuales</li>
+          </ul>
+          <a href="#contacto" class="pricing__cta">Comenzar ahora</a>
+        </div>
+        <div class="pricing-card pricing-card.popular" style="--index: 1">
+          <div class="pricing__badge">M&#225;s popular</div>
+          <h3 class="pricing__name">Professional</h3>
+          <div class="pricing__price">$<strong>1500</strong><span>/mes</span></div>
+          <p class="pricing__desc">Para negocios en crecimiento</p>
+          <ul class="pricing__features">
+            <li>Hasta 10 automatizaciones</li>
+            <li>Soporte email + WhatsApp</li>
+            <li>Implementaci&#243;n en 48 horas</li>
+            <li>Reportes avanzados</li>
+            <li>Optimizaci&#243;n mensual</li>
+            <li>Chat prioritario 24/7</li>
+          </ul>
+          <a href="#contacto" class="pricing__cta">Comenzar ahora</a>
+        </div>
+        <div class="pricing-card" style="--index: 2">
+          <h3 class="pricing__name">Enterprise</h3>
+          <div class="pricing__price">Custom</div>
+          <p class="pricing__desc">Para grandes operaciones</p>
+          <ul class="pricing__features">
+            <li>Automatizaciones ilimitadas</li>
+            <li>Gerente de cuenta dedicado</li>
+            <li>Soporte 24/7 prioritario</li>
+            <li>Reportes personalizados</li>
+            <li>Integraciones complejas</li>
+            <li>SLA garantizado</li>
+          </ul>
+          <a href="#contacto" class="pricing__cta">Contactar ventas</a>
+        </div>
+      </div>
+      <div style="text-align:center;margin-top:60px;color:#777;font-size:13px;">
+        <p>Todos los planes incluyen: Garant&#237;a de resultados en 90 d&#237;as ✓ Sin contratos a largo plazo ✓ Cancelaci&#243;n en cualquier momento ✓</p>
+      </div>
+    </div>
+  </section>
+
   <!-- C&#211;MO TRABAJAMOS -->
   <section class="proceso" id="proceso">
     <div class="container">
@@ -1643,6 +2076,90 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         <div class="paso paso--3">
           <h3 class="paso__title">En marcha</h3>
           <p class="paso__desc">Construimos, testeamos y dejamos todo funcionando. Con soporte incluido.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq section" id="faq">
+    <div class="container" style="max-width:800px;">
+      <div class="section__header">
+        <h2 class="section__title">Preguntas Frecuentes</h2>
+        <p class="section__sub">Todo lo que necesit&#225;s saber</p>
+      </div>
+      <div class="faq__list">
+        <div class="faq-item" style="--index: 0">
+          <div class="faq__header">
+            <h4>&#191;Cu&#225;nto tiempo toma la implementaci&#243;n?</h4>
+            <span class="faq__chevron">›</span>
+          </div>
+          <div class="faq__content">
+            <p>Implementaci&#243;n completa en 48-72 horas. Dependiendo de la complejidad, pod&#233;s tener automatizaciones funcionando desde el d&#237;a 1.</p>
+          </div>
+        </div>
+        <div class="faq-item" style="--index: 1">
+          <div class="faq__header">
+            <h4>&#191;Se integra con mis herramientas existentes?</h4>
+            <span class="faq__chevron">›</span>
+          </div>
+          <div class="faq__content">
+            <p>S&#237;. Integramos con CRMs, email marketing, WhatsApp, Slack, bases de datos y m&#225;s de 500 aplicaciones. Si tu herramienta tiene API, podemos conectarla.</p>
+          </div>
+        </div>
+        <div class="faq-item" style="--index: 2">
+          <div class="faq__header">
+            <h4>&#191;Cu&#225;l es la tasa de &#233;xito de vuestros proyectos?</h4>
+            <span class="faq__chevron">›</span>
+          </div>
+          <div class="faq__content">
+            <p>94% de nuestros clientes ven resultados medibles en 30 d&#237;as. Y 89% mantienen su suscripci&#243;n porque el ROI habla solo.</p>
+          </div>
+        </div>
+        <div class="faq-item" style="--index: 3">
+          <div class="faq__header">
+            <h4>&#191;Puedo cancelar en cualquier momento?</h4>
+            <span class="faq__chevron">›</span>
+          </div>
+          <div class="faq__content">
+            <p>100% s&#237;. Sin contratos de largo plazo. Mes a mes. Si en 90 d&#237;as no ves el impacto prometido, devolvemos tu dinero.</p>
+          </div>
+        </div>
+        <div class="faq-item" style="--index: 4">
+          <div class="faq__header">
+            <h4>&#191;Qu&#233; pasa si algo falla en producci&#243;n?</h4>
+            <span class="faq__chevron">›</span>
+          </div>
+          <div class="faq__content">
+            <p>Nuestro equipo responde en menos de 2 horas. Tenemos monitoreo 24/7 y, si hay un problema, no esperas: nos comunicamos antes de que lo notes.</p>
+          </div>
+        </div>
+        <div class="faq-item" style="--index: 5">
+          <div class="faq__header">
+            <h4>&#191;Entrenan a mi equipo?</h4>
+            <span class="faq__chevron">›</span>
+          </div>
+          <div class="faq__content">
+            <p>S&#237;. Documentaci&#243;n completa + sesi&#243;n de entrenamiento incluida. Queremos que tu equipo entienda y pueda mantener las automatizaciones.</p>
+          </div>
+        </div>
+        <div class="faq-item" style="--index: 6">
+          <div class="faq__header">
+            <h4>&#191;C&#243;mo se calcula el ROI?</h4>
+            <span class="faq__chevron">›</span>
+          </div>
+          <div class="faq__content">
+            <p>Sumamos: horas liberadas + leads adicionales + reducci&#243;n de costos. Con nuestros clientes, el retorno promedio es 3x en los primeros 90 d&#237;as.</p>
+          </div>
+        </div>
+        <div class="faq-item" style="--index: 7">
+          <div class="faq__header">
+            <h4>&#191;Qu&#233; incluye el soporte post-setup?</h4>
+            <span class="faq__chevron">›</span>
+          </div>
+          <div class="faq__content">
+            <p>Optimizaci&#243;n mensual, monitoreo 24/7, respuesta r&#225;pida a problemas y escalabilidad. Si funciona bien, vamos por m&#225;s automatizaciones.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -1871,5 +2388,66 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="src/main.js?v=13"></script>
+
+  <script>
+  // Scroll-reveal animations
+  (function() {
+    const sections = document.querySelectorAll('.section');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    sections.forEach(section => observer.observe(section));
+  })();
+
+  // FAQ accordion toggle
+  (function() {
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+      const header = item.querySelector('.faq__header');
+      const content = item.querySelector('.faq__content');
+      const chevron = item.querySelector('.faq__chevron');
+
+      header.addEventListener('click', () => {
+        const isOpen = item.classList.contains('open');
+
+        // Close all other items
+        faqItems.forEach(other => {
+          if (other !== item) {
+            other.classList.remove('open');
+            other.querySelector('.faq__content').style.maxHeight = '0px';
+          }
+        });
+
+        // Toggle current item
+        item.classList.toggle('open');
+        if (!isOpen) {
+          content.style.maxHeight = content.scrollHeight + 'px';
+        } else {
+          content.style.maxHeight = '0px';
+        }
+      });
+    });
+  })();
+
+  // Stagger animation helper (assign --index CSS variable)
+  (function() {
+    const gridContainers = document.querySelectorAll('.testimonials__grid, .why-kova__grid, .pricing__grid');
+
+    gridContainers.forEach(container => {
+      const items = container.querySelectorAll('[style*="--index"]');
+      items.forEach((item, index) => {
+        if (!item.style.getPropertyValue('--index')) {
+          item.style.setProperty('--index', index);
+        }
+      });
+    });
+  })();
+  </script>
 </body>
 </html>
