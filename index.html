@@ -60,7 +60,7 @@
     justify-content: center;
     position: relative;
     overflow: hidden;
-    padding: 120px 24px 80px;
+    padding: 80px 24px 80px;
   }
   .aria-hero::before {
     content: "";
@@ -73,9 +73,17 @@
   }
   .aria-hero__header {
     text-align: center;
-    margin-bottom: 40px;
-    position: relative;
-    z-index: 2;
+    margin-bottom: 0;
+    position: absolute;
+    z-index: 0;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.12;
+    filter: blur(0.5px);
+    pointer-events: none;
   }
   .aria-hero__kicker {
     display: inline-flex;
@@ -121,19 +129,18 @@
   .aria-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 48px;
-    max-width: 1160px;
+    gap: 64px;
+    max-width: 1200px;
     width: 100%;
-    align-items: flex-start;
+    align-items: center;
     position: relative;
     z-index: 2;
-    padding-top: 20px;
   }
   .aria-grid__left {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
+    gap: 16px;
   }
   .aria-grid__right {}
 
@@ -232,7 +239,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    height: 520px;
+    height: 560px;
   }
   .aria-chat-header {
     display: flex;
@@ -919,7 +926,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
               speed="1"
               loop
               autoplay
-              style="width:240px;height:240px;">
+              style="width:320px;height:320px;">
             </dotlottie-player>
 
           </div>
