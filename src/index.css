@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background-color: #F8F7F4;
+    color: #0A0A0A;
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+  }
+
+  ::selection {
+    background: #E8501A;
+    color: #fff;
+  }
+
+  @media (pointer: fine) {
+    * { cursor: none !important; }
+  }
+}
+
+@layer utilities {
+  .font-serif {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  @keyframes dot-pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.55); }
+    60%       { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
+  }
+
+  @keyframes grain {
+    0%,100% { transform: translate(0,0); }
+    10%      { transform: translate(-5%,-10%); }
+    20%      { transform: translate(-15%,5%); }
+    30%      { transform: translate(7%,-25%); }
+    40%      { transform: translate(-5%,25%); }
+    50%      { transform: translate(-15%,10%); }
+    60%      { transform: translate(15%,0%); }
+    70%      { transform: translate(0%,15%); }
+    80%      { transform: translate(3%,35%); }
+    90%      { transform: translate(-10%,10%); }
+  }
+}
