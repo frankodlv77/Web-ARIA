@@ -5,16 +5,18 @@ export default {
     extend: {
       colors: {
         kova: {
-          bg: '#F8F7F4',
-          dark: '#0A0A0A',
-          accent: '#E8501A',
-          gray: '#888888',
+          bg:     '#FAFAF8',
+          beige:  '#F0EDE6',
+          dark:   '#2A2A2A',
+          accent: '#1A1A1A',
+          border: '#E5E2DC',
+          gray:   '#888888',
         },
       },
       fontFamily: {
-        serif: ['Playfair Display', 'Georgia', 'serif'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Montserrat', 'Inter', 'sans-serif'],
+        serif:   ['Sora', 'sans-serif'],
+        sans:    ['Sora', 'system-ui', 'sans-serif'],
+        display: ['Sora', 'sans-serif'],
       },
     },
   },

@@ -1,152 +1,125 @@
-import { useState, useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { useState } from 'react'
+import { motion } from 'framer-motion'
 
-const SERVICES = [
+const PACKAGES = [
   {
     num: '01',
-    name: 'Inteligencia Artificial',
-    desc: 'Agentes y workflows que toman decisiones, responden clientes y procesan información sin intervención humana.',
+    name: 'Diseño & Desarrollo',
+    tagline: 'Tu presencia digital, construida para convertir.',
+    items: ['Páginas web', 'Apps web', 'Software a medida', 'Branding e Identidad'],
   },
   {
     num: '02',
-    name: 'Automatización',
-    desc: 'Conectamos tus herramientas y eliminamos el trabajo manual. Cada proceso repetitivo es candidato a automatizar.',
+    name: 'Automatización e IA',
+    tagline: 'Sistemas que trabajan mientras vos dormís.',
+    items: ['Automatizaciones con n8n', 'Agentes de IA', 'Integraciones a medida'],
   },
   {
     num: '03',
-    name: 'Marketing Digital',
-    desc: 'Estrategia, contenido y performance alineados a tus objetivos de negocio. Sin vanity metrics.',
-  },
-  {
-    num: '04',
-    name: 'Desarrollo Digital',
-    desc: 'Webs y apps que convierten. Diseño con intención, código limpio, velocidad real.',
+    name: 'Marketing & Crecimiento',
+    tagline: 'Visibilidad, comunidad y ventas en escala.',
+    items: ['Marketing digital', 'Gestión de RRSS', 'Publicidad en Ads', 'SEO & Posicionamiento'],
   },
 ]
 
-function ServiceCard({ s, i }) {
+function PackageCard({ pkg, i }) {
   const [hovered, setHovered] = useState(false)
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 32 }}
+      initial={{ opacity: 0, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.6, delay: i * 0.08 }}
+      transition={{ duration: 0.6, delay: i * 0.1 }}
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="relative border-t border-kova-dark/10 cursor-pointer"
       style={{
-        padding: '40px 0 40px 20px',
-        transform: hovered ? 'translateY(-4px)' : 'translateY(0)',
-        transition: 'transform 0.3s ease',
+        background: hovered ? '#F0EDE6' : '#FAFAF8',
+        borderColor: hovered ? '#2A2A2A' : '#E5E2DC',
+        transition: 'background 0.3s ease, border-color 0.3s ease',
+        padding: '40px 36px 48px',
+        cursor: 'default',
+        display: 'flex',
+        flexDirection: 'column',
       }}
     >
-      {/* Left orange border */}
-      <div
-        className="absolute left-0 top-0 bottom-0"
-        style={{
-          width: '2px',
-          background: '#E8501A',
-          opacity: hovered ? 1 : 0,
-          transition: 'opacity 0.3s ease',
-        }}
-      />
-
-      <span className="text-kova-accent text-xs font-medium tracking-[0.2em] mb-4 block">
-        {s.num}
+      {/* Número */}
+      <span style={{
+        fontSize: '10px', fontWeight: 500, letterSpacing: '0.3em',
+        color: '#AAAAAA', display: 'block', marginBottom: '28px',
+      }}>
+        {pkg.num}
       </span>
-      <h3 className="font-serif text-2xl md:text-3xl font-bold text-kova-dark">
-        {s.name}
+
+      {/* Nombre */}
+      <h3 style={{
+        fontSize: 'clamp(22px, 2.5vw, 34px)',
+        fontWeight: 700,
+        color: '#2A2A2A',
+        lineHeight: 1.15,
+        marginBottom: '12px',
+      }}>
+        {pkg.name}
       </h3>
 
-      {/* Description — slides up on hover */}
-      <div
-        style={{
-          overflow: 'hidden',
-          maxHeight: hovered ? '120px' : '0px',
-          marginTop: hovered ? '12px' : '0px',
-          transition: 'max-height 0.3s ease, margin-top 0.3s ease',
-        }}
-      >
-        <p
-          className="text-kova-gray text-sm md:text-base leading-relaxed"
-          style={{
-            opacity: hovered ? 1 : 0,
-            transform: hovered ? 'translateY(0)' : 'translateY(10px)',
-            transition: 'opacity 0.3s ease, transform 0.3s ease',
-          }}
-        >
-          {s.desc}
-        </p>
+      {/* Tagline */}
+      <p style={{
+        fontSize: '14px',
+        color: '#888888',
+        lineHeight: 1.6,
+        marginBottom: '32px',
+      }}>
+        {pkg.tagline}
+      </p>
+
+      {/* Divisor */}
+      <div style={{ height: '1px', background: '#E5E2DC', marginBottom: '24px' }} />
+
+      {/* Items */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+        {pkg.items.map(item => (
+          <div key={item} style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+            <span style={{ fontSize: '10px', color: hovered ? '#2A2A2A' : '#AAAAAA', transition: 'color 0.3s ease' }}>→</span>
+            <span style={{ fontSize: '13px', color: '#555555', letterSpacing: '0.01em' }}>{item}</span>
+          </div>
+        ))}
       </div>
     </motion.div>
   )
 }
 
 export default function Servicios() {
-  const imgRef = useRef(null)
-
-  const { scrollYProgress } = useScroll({
-    target: imgRef,
-    offset: ['start end', 'end start'],
-  })
-  const imgY = useTransform(scrollYProgress, [0, 1], ['-20px', '20px'])
-
   return (
-    <section id="servicios" className="bg-kova-bg overflow-hidden">
+    <section id="servicios" style={{ background: '#FAFAF8' }}>
+      <div className="max-w-7xl mx-auto px-6 md:px-12 pt-24 md:pt-36 pb-24 md:pb-36">
 
-      {/* Header */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 pt-24 md:pt-36 pb-16 md:pb-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
+          className="mb-16 md:mb-20"
         >
-          <p className="text-kova-gray text-xs tracking-[0.3em] uppercase mb-4">Lo que hacemos</p>
-
-          {/* Orange line — grows left to right */}
-          <motion.div
-            className="h-px mb-6"
-            style={{ background: '#E8501A' }}
-            initial={{ width: 0 }}
-            whileInView={{ width: '40px' }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          />
-
-          <h2 className="font-serif text-4xl md:text-6xl font-bold text-kova-dark max-w-2xl leading-tight">
-            Cuatro líneas.<br />Un solo objetivo.
+          <div className="flex items-center gap-3 mb-5">
+            <div style={{ width: '32px', height: '1px', background: '#2A2A2A' }} />
+            <span style={{ fontSize: '10px', fontWeight: 600, letterSpacing: '0.35em', textTransform: 'uppercase', color: '#888' }}>
+              Lo que hacemos
+            </span>
+          </div>
+          <h2
+            style={{ fontSize: 'clamp(36px, 5vw, 68px)', fontWeight: 700, color: '#2A2A2A', lineHeight: 1.1, maxWidth: '640px' }}
+          >
+            Construimos. Automatizamos.<br />
+            <em className="not-italic" style={{ color: '#AAAAAA' }}>Posicionamos.</em>
           </h2>
         </motion.div>
-      </div>
 
-      {/* Full-width image with subtle parallax */}
-      <div
-        ref={imgRef}
-        className="w-full h-[45vh] md:h-[60vh] overflow-hidden"
-      >
-        <motion.img
-          src="/services.png"
-          alt="Infraestructura KOVA"
-          className="w-full h-full object-cover"
-          loading="lazy"
-          style={{ y: imgY }}
-          initial={{ opacity: 0, scale: 1.03 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1 }}
-        />
-      </div>
-
-      {/* Services grid */}
-      <div className="max-w-7xl mx-auto px-6 md:px-12 pb-24 md:pb-36">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-x-20">
-          {SERVICES.map((s, i) => (
-            <ServiceCard key={s.num} s={s} i={i} />
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px" style={{ background: '#E5E2DC' }}>
+          {PACKAGES.map((pkg, i) => (
+            <PackageCard key={pkg.num} pkg={pkg} i={i} />
           ))}
         </div>
+
       </div>
     </section>
   )

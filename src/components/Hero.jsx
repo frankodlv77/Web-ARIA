@@ -1,5 +1,38 @@
 import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, useMotionValue, useSpring } from 'framer-motion'
+
+function MagneticBtn({ children, href, className, style, onMouseEnter, onMouseLeave: onLeave }) {
+  const ref = useRef(null)
+  const x = useMotionValue(0)
+  const y = useMotionValue(0)
+  const sx = useSpring(x, { stiffness: 200, damping: 18 })
+  const sy = useSpring(y, { stiffness: 200, damping: 18 })
+
+  const handleMove = (e) => {
+    const r = ref.current.getBoundingClientRect()
+    x.set((e.clientX - (r.left + r.width / 2)) * 0.28)
+    y.set((e.clientY - (r.top + r.height / 2)) * 0.28)
+  }
+  const handleLeave = (e) => {
+    x.set(0)
+    y.set(0)
+    onLeave?.(e)
+  }
+
+  return (
+    <motion.a
+      ref={ref}
+      href={href}
+      className={className}
+      style={{ ...style, x: sx, y: sy }}
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+      onMouseEnter={onMouseEnter}
+    >
+      {children}
+    </motion.a>
+  )
+}
 
 function WordReveal({ text, delay, style }) {
   const words = text.split(' ')
@@ -51,19 +84,6 @@ export default function Hero() {
       {/* Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 w-full py-32">
 
-        {/* Eyebrow */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1, delay: 0.15 }}
-          className="flex items-center gap-4 mb-10"
-        >
-          <div className="w-8 h-px bg-white/25" />
-          <span className="text-white/45 text-xs font-medium tracking-[0.38em] uppercase">
-            Buenos Aires · Argentina
-          </span>
-        </motion.div>
-
         {/* Headline */}
         <h1
           className="font-display uppercase mb-12"
@@ -77,17 +97,17 @@ export default function Hero() {
           <WordReveal
             text="TU OPERACIÓN,"
             delay={0.3}
-            style={{ color: '#ffffff', fontWeight: 900 }}
+            style={{ color: '#ffffff', fontWeight: 700 }}
           />
           <WordReveal
             text="EN PILOTO"
             delay={0.48}
-            style={{ color: '#888888', fontWeight: 300 }}
+            style={{ color: '#888888', fontWeight: 400 }}
           />
           <WordReveal
             text="AUTOMÁTICO."
             delay={0.66}
-            style={{ color: '#ffffff', fontWeight: 900 }}
+            style={{ color: '#ffffff', fontWeight: 700 }}
           />
         </h1>
 
@@ -110,12 +130,12 @@ export default function Hero() {
           transition={{ duration: 0.7, delay: 1.05 }}
           className="flex flex-col sm:flex-row items-center gap-6"
         >
-          <a
-            href="#contacto"
+          <MagneticBtn
+            href="#aria"
             className="inline-flex items-center gap-3 bg-white text-kova-dark text-xs font-semibold tracking-[0.18em] uppercase px-10 py-4 hover:bg-white/90 transition-all duration-300"
           >
-            Hablemos <span>→</span>
-          </a>
+            Diagnóstico gratuito con ARIA <span>→</span>
+          </MagneticBtn>
           <a
             href="#servicios"
             className="inline-flex items-center gap-2 text-sm font-medium tracking-[0.15em] uppercase transition-colors duration-300"

@@ -1,6 +1,36 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
+// Destellos de luz cálidos — visibles sobre fondo #FAFAF8
+const STREAKS = [
+  { delay: 0.15, duration: 1.1, width: '180px', opacity: 0.55, top: '22%', thick: 6  },
+  { delay: 0.5,  duration: 0.9, width: '90px',  opacity: 0.4,  top: '55%', thick: 3  },
+  { delay: 0.8,  duration: 1.2, width: '260px', opacity: 0.45, top: '72%', thick: 8  },
+  { delay: 1.15, duration: 0.8, width: '120px', opacity: 0.35, top: '38%', thick: 4  },
+]
+
+function LightStreak({ delay, duration, width, opacity, top, thick }) {
+  return (
+    <motion.div
+      initial={{ x: '-30vw' }}
+      animate={{ x: '130vw' }}
+      transition={{ duration, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
+      style={{
+        position: 'absolute',
+        top,
+        left: 0,
+        width,
+        height: `${thick}px`,
+        background: `linear-gradient(90deg, transparent, rgba(210,185,140,${opacity}), rgba(230,205,155,${opacity * 0.6}), transparent)`,
+        transform: 'skewX(-25deg)',
+        pointerEvents: 'none',
+        zIndex: 1,
+        borderRadius: '999px',
+      }}
+    />
+  )
+}
+
 export default function PageLoader() {
   const [visible, setVisible] = useState(true)
 
@@ -24,7 +54,7 @@ export default function PageLoader() {
             position: 'fixed',
             inset: 0,
             zIndex: 999999,
-            background: '#ffffff',
+            background: '#FAFAF8',
             display: 'flex',
             flexDirection: 'column',
             alignItems: 'center',
@@ -32,18 +62,23 @@ export default function PageLoader() {
             overflow: 'hidden',
           }}
         >
-          {/* ARIA — círculo, overflow hidden = cero bordes */}
+          {/* Destellos de luz */}
+          {STREAKS.map((s, i) => <LightStreak key={i} {...s} />)}
+
+          {/* ARIA foto — círculo grande */}
           <motion.div
             initial={{ opacity: 0, scale: 0.88, y: 30 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             transition={{ duration: 1.1, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
             style={{
-              width: '200px',
-              height: '200px',
+              width: 'clamp(260px, 32vw, 360px)',
+              height: 'clamp(260px, 32vw, 360px)',
               borderRadius: '50%',
               overflow: 'hidden',
               flexShrink: 0,
-              marginBottom: '28px',
+              marginBottom: '32px',
+              position: 'relative',
+              zIndex: 2,
             }}
           >
             <img
@@ -59,40 +94,45 @@ export default function PageLoader() {
             />
           </motion.div>
 
-          {/* KOVA + tagline */}
+          {/* VORA + ARIA */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.65 }}
-            style={{ textAlign: 'center', padding: '0 24px 56px', position: 'relative', zIndex: 2, background: '#ffffff' }}
+            transition={{ duration: 0.7, delay: 0.6 }}
+            style={{
+              textAlign: 'center',
+              position: 'relative',
+              zIndex: 2,
+              paddingBottom: '40px',
+            }}
           >
             <p
               style={{
-                fontFamily: 'Montserrat, sans-serif',
-                fontWeight: 900,
-                fontSize: 'clamp(44px, 9vw, 88px)',
-                color: '#0A0A0A',
-                letterSpacing: '-2px',
+                fontFamily: 'Sora, sans-serif',
+                fontWeight: 700,
+                fontSize: 'clamp(72px, 14vw, 140px)',
+                color: '#2A2A2A',
+                letterSpacing: '-4px',
                 lineHeight: 1,
                 margin: 0,
               }}
             >
-              KOVA
+              VORA
             </p>
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.6, delay: 1.1 }}
               style={{
-                fontSize: '10px',
-                letterSpacing: '0.3em',
+                fontSize: '11px',
+                letterSpacing: '0.55em',
                 textTransform: 'uppercase',
-                color: '#888888',
-                marginTop: '10px',
-                fontFamily: 'Inter, sans-serif',
+                color: '#AAAAAA',
+                marginTop: '12px',
+                fontFamily: 'Sora, sans-serif',
               }}
             >
-              Automatización · IA · Marketing
+              ARIA
             </motion.p>
           </motion.div>
         </motion.div>

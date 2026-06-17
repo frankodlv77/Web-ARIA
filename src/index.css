@@ -12,27 +12,24 @@
   }
 
   body {
-    background-color: #F8F7F4;
-    color: #0A0A0A;
-    font-family: 'Inter', system-ui, sans-serif;
+    background-color: #FAFAF8;
+    color: #2A2A2A;
+    font-family: 'Sora', system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     margin: 0;
   }
 
   ::selection {
-    background: #E8501A;
-    color: #fff;
+    background: #2A2A2A;
+    color: #FAFAF8;
   }
 
-  @media (pointer: fine) {
-    * { cursor: none !important; }
-  }
 }
 
 @layer utilities {
   .font-serif {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Sora', sans-serif;
   }
 
   @keyframes marquee {
