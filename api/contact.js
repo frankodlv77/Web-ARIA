@@ -23,17 +23,49 @@ export default async function handler(req) {
     })
   }
 
-  // To enable email delivery, connect a service like Resend:
-  // const resend = new Resend(process.env.RESEND_API_KEY)
-  // await resend.emails.send({
-  //   from: 'web@kova-systems.com',
-  //   to: 'hola@kova-systems.com',
-  //   subject: `Nuevo contacto: ${nombre}`,
-  //   text: `De: ${nombre} <${email}>\n\n${mensaje}`,
-  // })
+  const apiKey = process.env.RESEND_API_KEY
+  if (!apiKey) {
+    return new Response(JSON.stringify({ error: 'Email service not configured' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
 
-  return new Response(JSON.stringify({ ok: true }), {
-    status: 200,
-    headers: { 'Content-Type': 'application/json' },
-  })
+  try {
+    const res = await fetch('https://api.resend.com/emails', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        from: 'VORA Web <onboarding@resend.dev>',
+        to: 'hola@vora-system.com',
+        reply_to: email,
+        subject: `Nuevo contacto: ${nombre}`,
+        text: `Nombre: ${nombre}\nEmail: ${email}\n\nMensaje:\n${mensaje}`,
+        html: `<p><strong>Nombre:</strong> ${nombre}</p><p><strong>Email:</strong> <a href="mailto:${email}">${email}</a></p><hr/><p>${mensaje.replace(/\n/g, '<br/>')}</p>`,
+      }),
+    })
+
+    if (!res.ok) {
+      const err = await res.text()
+      console.error('Resend error:', err)
+      return new Response(JSON.stringify({ error: 'Email delivery failed' }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' },
+      })
+    }
+
+    return new Response(JSON.stringify({ ok: true }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  } catch (err) {
+    console.error('Contact handler error:', err)
+    return new Response(JSON.stringify({ error: 'Internal error' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    })
+  }
 }
