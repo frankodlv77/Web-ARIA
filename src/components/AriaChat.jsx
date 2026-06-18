@@ -126,9 +126,9 @@ export default function AriaChat() {
             className="block w-full h-[55vh] lg:h-screen lg:w-auto object-cover object-top"
             loading="lazy"
           />
-          {/* Fade inferior mobile — cubre el corte con el panel chat */}
+          {/* Fade inferior mobile — difumina corte sin tapar cara */}
           <div className="absolute bottom-0 inset-x-0 pointer-events-none lg:hidden"
-            style={{ height: '70%', background: 'linear-gradient(to top, #F5F2EB 40%, transparent)' }} />
+            style={{ height: '35%', background: 'linear-gradient(to top, #F5F2EB 15%, transparent)' }} />
           {/* Fade inferior desktop — hacia fondo del contenedor imagen */}
           <div className="absolute bottom-0 inset-x-0 pointer-events-none hidden lg:block"
             style={{ height: '30%', background: 'linear-gradient(to top, #FAFAF8, transparent)' }} />
