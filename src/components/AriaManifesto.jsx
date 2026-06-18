@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion'
 
 const PHRASES = [
@@ -10,15 +10,23 @@ const PHRASES = [
 
 export default function AriaManifesto() {
   const containerRef = useRef(null)
+  const [isMobile, setIsMobile] = useState(false)
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768)
+    check()
+    window.addEventListener('resize', check)
+    return () => window.removeEventListener('resize', check)
+  }, [])
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   })
 
-  // ARIA bg — sutil, paleta clara
-  const rawScale = useTransform(scrollYProgress, [0, 1], [1.0, 1.12])
-  const ariaScale = useSpring(rawScale, { stiffness: 60, damping: 20 })
+  // Mobile: zoom dramático 1.0 → 1.8 / Desktop: sutil 1.0 → 1.12
+  const rawScale = useTransform(scrollYProgress, [0, 1], [1.0, isMobile ? 1.8 : 1.12])
+  const ariaScale = useSpring(rawScale, { stiffness: isMobile ? 40 : 60, damping: isMobile ? 15 : 20 })
 
   // Phrase 0: 0% → 25%
   const op0 = useTransform(scrollYProgress, [0, 0.08, 0.2, 0.25], [0, 1, 1, 0])

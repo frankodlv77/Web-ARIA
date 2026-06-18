@@ -162,10 +162,10 @@ export default function Contacto() {
                   Email
                 </p>
                 <a
-                  href="mailto:hola@kova-systems.com"
+                  href="mailto:hola@vora-system.com"
                   className="text-kova-dark text-base hover:text-kova-gray transition-colors"
                 >
-                  hola@kova-systems.com
+                  hola@vora-system.com
                 </a>
               </div>
 
@@ -174,12 +174,12 @@ export default function Contacto() {
                   Instagram
                 </p>
                 <a
-                  href="https://www.instagram.com/kovasystems_ia/"
+                  href="https://www.instagram.com/franco.de.la.vega/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-kova-dark text-base hover:text-kova-gray transition-colors"
                 >
-                  @vorastudio
+                  @franco.de.la.vega
                 </a>
               </div>
             </div>
@@ -264,11 +264,11 @@ export default function Contacto() {
                 className="block text-sm text-kova-dark hover:text-kova-gray transition-colors mb-2">
                 WhatsApp
               </a>
-              <a href="mailto:hola@kova-systems.com"
+              <a href="mailto:hola@vora-system.com"
                 className="block text-sm text-kova-dark hover:text-kova-gray transition-colors mb-2">
-                hola@kova-systems.com
+                hola@vora-system.com
               </a>
-              <a href="https://www.instagram.com/kovasystems_ia/" target="_blank" rel="noopener noreferrer"
+              <a href="https://www.instagram.com/franco.de.la.vega/" target="_blank" rel="noopener noreferrer"
                 className="block text-sm text-kova-dark hover:text-kova-gray transition-colors">
                 Instagram
               </a>
