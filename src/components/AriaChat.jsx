@@ -128,7 +128,7 @@ export default function AriaChat() {
           />
           {/* Fade inferior mobile — difumina corte sin tapar cara */}
           <div className="absolute bottom-0 inset-x-0 pointer-events-none lg:hidden"
-            style={{ height: '35%', background: 'linear-gradient(to top, #F5F2EB 15%, transparent)' }} />
+            style={{ height: '22%', background: 'linear-gradient(to top, #F5F2EB 5%, transparent)' }} />
           {/* Fade inferior desktop — hacia fondo del contenedor imagen */}
           <div className="absolute bottom-0 inset-x-0 pointer-events-none hidden lg:block"
             style={{ height: '30%', background: 'linear-gradient(to top, #FAFAF8, transparent)' }} />
