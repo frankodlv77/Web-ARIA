@@ -1,4 +1,5 @@
 import { motion, useScroll, useSpring } from 'framer-motion'
+import { Analytics } from '@vercel/analytics/react'
 import { useLenis } from './hooks/useLenis'
 import PageLoader from './components/PageLoader'
 import Nav from './components/Nav'
@@ -44,6 +45,7 @@ export default function App() {
         <Contacto />
       </main>
       <WhatsAppBtn />
+      <Analytics />
     </>
   )
 }
