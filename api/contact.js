@@ -39,7 +39,7 @@ export default async function handler(req) {
         'Authorization': `Bearer ${apiKey}`,
       },
       body: JSON.stringify({
-        from: 'VORA Web <onboarding@resend.dev>',
+        from: 'VORA Web <hola@vora-system.com>',
         to: 'hola@vora-system.com',
         reply_to: email,
         subject: `Nuevo contacto: ${nombre}`,
