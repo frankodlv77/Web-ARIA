@@ -142,23 +142,6 @@ export default function Contacto() {
             <div className="space-y-10">
               <div className="border-t border-kova-border pt-6">
                 <p className="text-[10px] font-medium tracking-[0.2em] text-kova-gray uppercase mb-3">
-                  WhatsApp
-                </p>
-                <a
-                  href="https://wa.me/5492615336300"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 text-xs font-medium tracking-[0.15em] uppercase px-8 py-4 transition-all"
-                  style={btnStyle.base}
-                  onMouseEnter={e => Object.assign(e.currentTarget.style, btnStyle.hover)}
-                  onMouseLeave={e => Object.assign(e.currentTarget.style, btnStyle.base)}
-                >
-                  Escribinos directo →
-                </a>
-              </div>
-
-              <div className="border-t border-kova-border pt-6">
-                <p className="text-[10px] font-medium tracking-[0.2em] text-kova-gray uppercase mb-3">
                   Email
                 </p>
                 <a
@@ -167,6 +150,12 @@ export default function Contacto() {
                 >
                   hola@vora-system.com
                 </a>
+              </div>
+              <div className="border-t border-kova-border pt-6">
+                <p className="text-[10px] font-medium tracking-[0.2em] text-kova-gray uppercase mb-3">
+                  Respondemos en
+                </p>
+                <p className="text-kova-dark text-base">menos de 24 horas.</p>
               </div>
             </div>
           </motion.div>
