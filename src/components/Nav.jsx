@@ -78,7 +78,7 @@ export default function Nav() {
 
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden flex flex-col gap-[5px] p-2"
+            className="md:hidden flex flex-col gap-[5px] p-2 col-start-3 justify-self-end"
             aria-label="Menú"
           >
             <span className={`block w-6 h-px transition-colors duration-300 ${dark ? 'bg-white' : 'bg-kova-dark'}`} />
